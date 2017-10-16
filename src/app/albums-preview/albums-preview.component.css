@@ -1,0 +1,26 @@
+.image-caption {
+    position: absolute;
+    bottom: 1rem;
+    font-size: 3rem;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.48);
+    color: white;
+}
+
+.swiper-slide {
+    height: 20rem;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+
+.swiper-link-img {
+    display: block;
+    width: 100%;
+}
+
+.swiper-img {
+    width:100%;
+}
+

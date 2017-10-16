@@ -6,6 +6,7 @@ const app = express();
 
 // API file for interacting with MongoDB
 const api = require('./server/routes/api');
+const photos = require('./server/routes/photos');
 
 // Parsers
 app.use(bodyParser.json());
@@ -16,6 +17,15 @@ app.use(express.static(path.join(__dirname, 'dist')));
 
 // API location
 app.use('/api', api);
+app.use('/api/photos', photos);
+
+app.use(function(req, res, next) {
+//set headers to allow cross origin request.
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
 // Send all other requests to the Angular app
 app.get('*', (req, res) => {

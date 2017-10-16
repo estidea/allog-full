@@ -1,0 +1,26 @@
+/* .parallax-container {
+    background: url(https://placeimg.com/1000/300/nature) no-repeat center center;
+    background-size: cover;
+} */
+.parallax-container .section {
+    margin: 3rem auto;
+}
+
+.allog-title {
+    letter-spacing: .4rem;
+    font-weight: 300;
+    font-size: 6rem;
+    display: inline-block;
+    background-color: rgba(0, 0, 0, 0.48);
+    padding: .4rem 1rem;
+    margin-bottom: 0;
+}
+
+.sub-title {
+    display: inline-block;
+    background-color: rgba(0, 0, 0, 0.48);
+    padding: .4rem 1rem;
+    text-transform: uppercase;
+    width: initial !important;
+    float: none;
+}

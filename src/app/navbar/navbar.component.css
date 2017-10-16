@@ -1,0 +1,13 @@
+nav .nav-wrapper {
+    position: relative;
+    display: flex;
+    height: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+#logo-container {
+    display: flex;
+    position: relative;
+}

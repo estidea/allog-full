@@ -1,0 +1,27 @@
+<nav class="white" role="navigation">
+  <div class="nav-wrapper container">
+    <ul class="left hide-on-med-and-down">
+        <li 
+          routerLinkActive="active current"
+          [routerLinkActiveOptions]="{ exact: true }">
+            <a 
+              routerLink="/">Home</a>
+        </li>
+        <li routerLinkActive="active current"><a routerLink="/portfolio">Portfolio</a></li>
+      </ul>
+
+    <a id="logo-container" routerLink="/" class="brand-logo">Alina Logvinova</a>
+
+    <ul class="right hide-on-med-and-down">
+      <li routerLinkActive="active current"><a routerLink="/about">About me</a></li>
+      <li routerLinkActive="active current"><a routerLink="/contacts">Contacts</a></li>
+    </ul>
+
+    <ul id="nav-mobile" class="side-nav">
+      <li><a routerLink="/">Home</a></li>
+      <li><a routerLink="/portfolio">Portfolio</a></li>
+      <li><a routerLink="/about">About me</a></li>
+    </ul>
+    <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+  </div>
+</nav>
