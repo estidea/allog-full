@@ -7,6 +7,8 @@ const app = express();
 // API file for interacting with MongoDB
 const api = require('./server/routes/api');
 const photos = require('./server/routes/photos');
+const directory = require('./server/routes/directory');
+const albums = require('./server/routes/albums');
 
 // Parsers
 app.use(bodyParser.json());
@@ -18,6 +20,8 @@ app.use(express.static(path.join(__dirname, 'dist')));
 // API location
 app.use('/api', api);
 app.use('/api/photos', photos);
+app.use('/directory', directory);
+app.use('/albums', albums);
 
 app.use(function(req, res, next) {
 //set headers to allow cross origin request.

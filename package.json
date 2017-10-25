@@ -25,6 +25,7 @@
     "bootstrap": "^4.0.0-alpha.6",
     "core-js": "^2.4.1",
     "express": "^4.15.4",
+    "fs": "0.0.1-security",
     "instafeed.js": "^1.4.1",
     "materialize-css": "^0.100.2",
     "mongodb": "^2.2.31",

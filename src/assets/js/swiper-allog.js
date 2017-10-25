@@ -1,6 +1,7 @@
 // $(document).ready(function () {
     //initialize swiper when document ready  
-window.onload = function () {
+//window.onload = 
+function swiperLoad() {
     var swiper = new Swiper('.swiper-container', {
         slidesPerView: 3,
         spaceBetween: 0,

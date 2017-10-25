@@ -29,8 +29,7 @@
         "assets/js/swiper.min.js",
         "assets/js/swiper-allog.js",
         "assets/js/init-materialize.js",
-        "assets/js/instafeed.min.js",
-        "assets/js/insta-recent.js"
+        "assets/js/pinterest-gallery.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

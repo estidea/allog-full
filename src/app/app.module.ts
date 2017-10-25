@@ -1,3 +1,5 @@
+import { UploadService } from './services/upload.service';
+import { ImplementjsService } from './services/implementjs.service';
 import { HomeComponent } from './home/home.component';
 import { TasksService } from './services/tasks.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -22,6 +24,7 @@ import { ImageDetailComponent } from './image-detail/image-detail.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { BlogComponent } from './blog/blog.component';
 import { AboutPhotographerComponent } from './about-photographer/about-photographer.component';
+import { AlbumComponent } from './album/album.component';
 
 
 @NgModule({
@@ -44,6 +47,7 @@ import { AboutPhotographerComponent } from './about-photographer/about-photograp
     NotFoundComponent,
     BlogComponent,
     AboutPhotographerComponent,
+    AlbumComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,11 +56,16 @@ import { AboutPhotographerComponent } from './about-photographer/about-photograp
       { path: '', component: HomeComponent },
       { path: 'about', component: AboutComponent },
       { path: 'portfolio', component: GalleryComponent },
-      { path: 'photo/:image', component: GalleryComponent },
+      { path: 'portfolio/:album', component: AlbumComponent },
       { path: '**', component: NotFoundComponent },
     ]),
   ],
-  providers: [DataService, TasksService],
+  providers: [
+    DataService, 
+    TasksService,
+    ImplementjsService,
+    UploadService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

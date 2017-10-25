@@ -18,7 +18,7 @@ export class DataService {
   }
 
   create(resourse) {
-    return this._http.post(this._url + "/newtask", resourse)
+    return this._http.post(this._url, resourse)
       .map(result => this.result = result.json().data)
   }
 

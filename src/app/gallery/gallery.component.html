@@ -1,3 +1,149 @@
-<p>
-  gallery works!
-</p>
+<h3 class="center-align">Портфолио</h3>
+<div class="container">
+<div class="row">
+  <div *ngFor="let album of albums" class="col s12 m6">
+    <div class="card large">
+      <div class="card-image">
+        <a [routerLink]="['/portfolio', album.title]">
+        <img class="scaleable opacity-hover" src="{{ album.thumb }}"></a>
+        <span class="card-title">{{ album.title }}</span>
+      </div>
+      <div class="card-content">
+        {{ album.description }}
+      </div>
+      <div class="card-action">
+      <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Перейти к альбому</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+<!-- ADD PHOTOALBUM -->
+  <div class="col s12 m6">
+    <div class="card large">
+      <div class="card-image">
+        <img #albumPreviewPhoto class="scaleable opacity-hover" src="http://demo.warptheme.com/images/placeholder_600x400.svg">
+        <span 
+          #albumPreviewTitle
+          class="card-title" 
+          style="width:100%"
+          >Название альбома</span>
+      </div>
+      <div class="card-content">
+        <p #albumPreviewDescription>Описание альбома</p>
+      </div>
+      <div class="card-action">
+      <a 
+        #showButton
+        class="waves-effect waves-light btn modal-trigger" 
+        (click)="toggleNewForm($event)"
+        href="#showform">Новый альбом</a>
+      </div>
+    </div>
+  </div>
+<!-- CREATE ALBUM FORM -->
+  <div *ngIf="activeNewForm" class="col s12 m6">
+      <div class="card large">
+        <div class="card-image" style="background-color:white">
+          <div ng2FileDrop
+            [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+            (fileOver)="fileOverBase($event)"
+            [uploader]="uploader"
+            class="well my-drop-zone"
+            style="height:3rem;padding: .5rem;">
+            Перетяните фотографии в эту зону
+          </div>
+          <div class="file-field input-field">
+            <div class="btn">
+              <span>Или нажмите</span>
+              <input type="file" ng2FileSelect [uploader]="uploader" multiple  />
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate" type="text">
+            </div>
+          </div>
+          
+          <br/>
+            <div *ngFor="let item of uploader.queue">
+            <button type="button" class="btn btn-success btn-xs"
+              (click)="uploadPhoto(uploader.queue[0], albumPreviewPhoto)" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+              <span class="glyphicon glyphicon-upload"></span> Загрузить
+            </button>
+            <button type="button" class="btn btn-warning btn-xs"
+                (click)="item.cancel()" [disabled]="!item.isUploading">
+                <span class="glyphicon glyphicon-ban-circle"></span> Отменить
+            </button>
+            <button type="button" class="btn btn-danger btn-xs"
+                    (click)="item.remove(item)">
+                <span class="glyphicon glyphicon-trash"></span> Удалить
+            </button>
+          </div>
+        </div>
+        <div class="card-content" style="max-height: 100%;">
+          <div class="input-field">
+            <input 
+              #newtitle
+              (change)="changeTitle(newtitle, albumPreviewTitle)"
+              id="album_title" type="text" class="validate">
+            <label for="album_title">Album title</label>
+          </div>
+          <div class="input-field">
+            <textarea 
+              #newdescription
+              (change)="changeDescription(newdescription, albumPreviewDescription)"
+              id="album_description" class="materialize-textarea"></textarea>
+            <label for="album_description">Album description</label>
+          </div>
+        </div>
+        <div class="card-action">
+          <a 
+            #submitButton
+            (click)="createAlbum($event, newtitle, newdescription, albumPreviewPhoto)"
+            class="waves-effect waves-light btn modal-trigger" 
+            href="/portfolio">Добавить альбом</a>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+
+
+  <!-- <div class="col s12 m6">
+    <div class="card large">
+      <div class="card-image">
+        <img class="scaleable opacity-hover" src="assets/img/ch-b.jpg">
+        <span class="card-title">Card Title</span>
+      </div>
+      <div class="card-content">
+        <p>I am a very simple card. I am good at containing small bits of information.
+        I am convenient because I require little markup to use effectively.</p>
+      </div>
+      <div class="card-action">
+      <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
+      </div>
+    </div>
+  </div>
+
+  
+
+
+<div class="row">
+    <div class="col s12 m6">
+      <div class="card large">
+        <div class="card-image">
+          <img class="scaleable opacity-hover" src="assets/img/nature.jpg">
+          <span class="card-title">Card Title</span>
+        </div>
+        <div class="card-content">
+          <p>I am a very simple card. I am good at containing small bits of information.
+          I am convenient because I require little markup to use effectively.</p>
+        </div>
+        <div class="card-action">
+        <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
+        </div>
+      </div>
+    </div> -->
+  
+   

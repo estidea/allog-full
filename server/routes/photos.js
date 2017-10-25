@@ -20,7 +20,8 @@ let response = {
 };
 
 
-const DIR = './uploads/';
+// const DIR = './uploads/album-thumbs';
+const DIR = './dist/uploads/album-thumbs';
 
 var storage = multer.diskStorage({
 	destination: function(req, file, callback) {
@@ -61,6 +62,5 @@ router.get('/show-all', (req, res, next) => {
         res.json(response);
     })
 });
-
 
 module.exports = router;

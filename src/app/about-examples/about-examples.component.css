@@ -1,5 +1,5 @@
 .img-thumb {
-    max-width: 48%;
+    max-width: 32%;
     height: auto;
     float: left;
     margin: 0 .5rem .5rem 0;
@@ -10,3 +10,4 @@
         max-width: 100%;
     }
 }
+
