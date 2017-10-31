@@ -4,8 +4,9 @@ const mongojs = require('mongojs');
 const multer = require('multer');
 const path = require('path');
 const fs=require('fs');
+const rimraf = require('rimraf');
 
-const db = mongojs('mongodb://estidea:219592@ds111885.mlab.com:11885/allog', ['albums']);
+const db = mongojs('mongodb://estidea:219592@ds111885.mlab.com:11885/allog', ['albums', 'photos']);
 // Error handling
 const sendError = (err, res) => {
     response.status = 501;
@@ -67,42 +68,53 @@ router.post('/', (req, res, next) => {
     }
 });
 
-// // Delete Task 
-// router.delete('/tasks/:id', (req, res, next) => {
-//   db.tasks.remove({_id: mongojs.ObjectId(req.params.id)},(err, task) => {
-//       if(err){
-//         sendError(err, res);
-//       }
-//       response.data = task;
-//       res.json(response);
-//   })
-// });
+// Delete Album 
+router.put('/:id', (req, res, next) => {
+    let album = req.body;
+    let dirname = DIR + album.title;
+    db.albums.remove({_id: mongojs.ObjectId(req.params.id)},(err, album) => {
+        if(err){
+            sendError(err, res);
+        }
+        if (fs.existsSync(dirname)){ 
+            fs.rmdirSync(dirname);
+        }  
+        response.data = album;
+        res.json(response);
+    });
+});
 
-// // Update Task
-// router.patch('/tasks/:id', (req, res, next) => {
-//   let task = req.body;
-//   let updTask = {};
-
-//   if(task.isDone) {
-//     updTask.isDone = task.isDone;
-//   }
-
-//   if(task.title) {
-//     updTask.title = task.title;
-//   }
-
-//   if(!updTask){
-//     sendError(err, res);
-//   } else {
-//     db.tasks.update({_id: mongojs.ObjectId(req.params.id)},updTask, {},(err, task) => {
-//       if(err){
-//           res.send(err);
-//       }
-//       response.data = task;
-//       res.json(response);
-//     });
-//   }
+// Update Album
+router.patch('/:id', (req, res, next) => {
+  let album = req.body;
+  let updAlbum = {};
+  updAlbum.title = album.title;
+  updAlbum.description = album.description;
+  updAlbum.thumb = album.thumb;
+  let oldTitle = album.oldTitle;
+  let oldDirname = DIR + album.oldTitle; 
+  let newDirname = DIR + album.title;
+  // let filename = album.filename;
   
-// });
+  db.albums.update({_id: mongojs.ObjectId(req.params.id)}, updAlbum, (err, album) => {
+    if(err){
+        res.send(err);
+    }
+    if (fs.existsSync(oldDirname)){ 
+      fs.rename(oldDirname, newDirname, (err) => {
+          if (err) throw err;
+          console.log('renamed complete');
+      });
+    };  
+    db.photos.update(
+      { "albumtitle": oldTitle }, 
+      { $set: { "albumtitle": updAlbum.title, "destination": newDirname } }, 
+      { multi: true }
+    ); 
+    response.data = album;
+    res.json(response);
+  });
+
+});
 
 module.exports = router;

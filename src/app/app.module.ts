@@ -1,3 +1,4 @@
+import { PhotosService } from './services/photos.service';
 import { UploadService } from './services/upload.service';
 import { ImplementjsService } from './services/implementjs.service';
 import { HomeComponent } from './home/home.component';
@@ -64,7 +65,8 @@ import { AlbumComponent } from './album/album.component';
     DataService, 
     TasksService,
     ImplementjsService,
-    UploadService
+    UploadService,
+    PhotosService
   ],
   bootstrap: [AppComponent]
 })

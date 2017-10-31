@@ -142,3 +142,14 @@ nav ul li.active {
 .card.small .card-image, .card.medium .card-image, .card.large .card-image {
   cursor: pointer;
 }
+
+.fine-button {
+  top: 1rem;
+  background-color: rgba(0, 0, 0, 0.58);
+}
+
+.fine-button:hover {
+  opacity: 1;
+}
+
+

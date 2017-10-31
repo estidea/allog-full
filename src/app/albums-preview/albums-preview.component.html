@@ -1,27 +1,15 @@
 <div class="swiper-container">
     <div class="swiper-wrapper">
-      <div class="swiper-slide" style=" background-image: url('assets/img/portraits.jpg');">
+      <div 
+        *ngFor="let album of albums, let last = last" 
+        class="swiper-slide" 
+        [ngStyle]="{'background-image': 'url(' + album.thumb +')'}">
         <div class="image-caption light">
-          PORTRAITS
+          {{ album.title }}
         </div>
       </div>
-      <div class="swiper-slide" style=" background-image: url('assets/img/ch-b.jpg');">
-        <div class="image-caption light">
-          BLACK && WHITE
-        </div>
-      </div>
-      <div class="swiper-slide" style=" background-image: url('assets/img/nature.jpg');">
-        <div class="image-caption light">
-          NATURE
-        </div>
-      </div>
-      <div class="swiper-slide" style=" background-image: url('assets/img/photo.jpg');">
-        <div class="image-caption light">
-          ANOTHER
-        </div>
-      </div>
+
     </div>
     <!-- Add Pagination -->
     <div class="swiper-pagination"></div>
 </div>
-      

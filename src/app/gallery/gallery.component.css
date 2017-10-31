@@ -3,3 +3,13 @@
 .another-file-over-class { border: dotted 3px green; }
 
 html, body { height: 100%; }
+
+.fine-button-edit {
+    position: absolute;
+    left: 1rem;
+  }
+
+.fine-button-delete {
+    position: absolute;
+    left: 5rem;
+}

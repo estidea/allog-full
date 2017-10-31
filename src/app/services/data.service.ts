@@ -8,13 +8,19 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class DataService {
   private result:any;
-  
+  param = '';
   constructor(private _url: string, private _http: Http) {
   }
   
-  getAll() {
-    return this._http.get(this._url)
-      .map(result => this.result = result.json().data);
+  getAll(param?) {
+    if (param != undefined) {
+      return this._http.get(this._url+'/'+param)
+        .map(result => this.result = result.json().data);
+    } else {
+      return this._http.get(this._url)
+        .map(result => this.result = result.json().data);
+    }
+    
   }
 
   create(resourse) {
@@ -22,9 +28,12 @@ export class DataService {
       .map(result => this.result = result.json().data)
   }
 
-  delete(id) {
-    return this._http.delete(this._url + "/" + id);
+  delete(id, title?) {
+    return this._http.put(this._url + "/" + id, { "title": title });
   }
+  // delete(id, title?) {
+  //   return this._http.delete(this._url + "/" + id, title);
+  // }
 
   update(id, newdata) {
     return this._http.patch(this._url + "/" + id, newdata)

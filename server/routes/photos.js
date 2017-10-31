@@ -19,22 +19,20 @@ let response = {
     message: null
 };
 
+const albumsThumbsDIR = './dist/uploads/album-thumbs';
 
-// const DIR = './uploads/album-thumbs';
-const DIR = './dist/uploads/album-thumbs';
-
-var storage = multer.diskStorage({
+var storageForAlbumThumbs = multer.diskStorage({
 	destination: function(req, file, callback) {
-		callback(null, DIR)
+		callback(null, albumsThumbsDIR) 
 	},
 	filename: function(req, file, callback) {
 		callback(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
 	}
 })
 
-// POST new photos
+// POST new album thumbs
 router.post('/new', function (req, res) {
-    let upload = multer({ storage: storage }).array("photo", 40);
+    let upload = multer({ storage: storageForAlbumThumbs }).array("photo", 40);
     upload(req, res, function (err) {
         let photo = req.files;
         if (err) {
@@ -51,9 +49,38 @@ router.post('/new', function (req, res) {
     })
 });
 
-// GET all photos
-router.get('/show-all', (req, res, next) => {
-    db.photos.find((err, photos) => {
+// POST new photos in album
+router.post('/new/:albumtitle', function (req, res) {
+    let storageForPhotosInAlbums = multer.diskStorage({
+        destination: function(req, file, callback) {
+            let photoInAlbumsDIR = './dist/uploads/' + req.params.albumtitle;
+            callback(null, photoInAlbumsDIR);  
+        },
+        filename: function(req, file, callback) {
+            callback(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
+        }
+    })
+    let upload = multer({ storage: storageForPhotosInAlbums }).array("photo", 40);
+    upload(req, res, function (err) {
+        let photo = req.files;
+        photo[0].albumtitle = req.params.albumtitle;
+        if (err) {
+            sendError(err, res);
+        } /* ===================================================== */
+        db.photos.save(photo, (err, task) => {
+            if(err){
+                sendError(err, res);
+            }
+            response.data = photo;
+            res.json(response);
+          });
+        // Everything went fine
+    })
+});
+
+// GET all photos from current album
+router.get('/:album', (req, res, next) => {
+    db.photos.find({ albumtitle: req.params.album }, (err, photos) => {
         if(err){
             // res.send(err);
             sendError(err, res);
@@ -62,5 +89,44 @@ router.get('/show-all', (req, res, next) => {
         res.json(response);
     })
 });
+
+
+// Delete Photo 
+router.delete('/:id', (req, res, next) => {
+    db.photos.remove({_id: mongojs.ObjectId(req.params.id)},(err, photo) => {
+        if(err){
+          sendError(err, res);
+        }
+        response.data = photo;
+        res.json(response);
+    })
+  });
+  
+  // Update Task
+  router.patch('/tasks/:id', (req, res, next) => {
+    let task = req.body;
+    let updTask = {};
+  
+    if(task.isDone) {
+      updTask.isDone = task.isDone;
+    }
+  
+    if(task.title) {
+      updTask.title = task.title;
+    }
+  
+    if(!updTask){
+      sendError(err, res);
+    } else {
+      db.tasks.update({_id: mongojs.ObjectId(req.params.id)},updTask, {},(err, task) => {
+        if(err){
+            res.send(err);
+        }
+        response.data = task;
+        res.json(response);
+      });
+    }
+    
+  });
 
 module.exports = router;

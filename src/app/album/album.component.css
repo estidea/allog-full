@@ -1,0 +1,25 @@
+.my-drop-zone { border: dotted 3px lightgray; }
+.nv-file-over { border: dotted 3px red; } /* Default class applied to drop zones on over */
+.another-file-over-class { border: dotted 3px green; }
+
+html, body { height: 100%; }
+
+.photo-container-wrapper {
+
+}
+
+.photo-div {
+    height:300px;
+    background-size: cover;
+    background-position: center center;
+}
+
+.photo-div:hover {
+    /*opacity: .8;*/
+    box-shadow: inset 0 0 0 2px black;
+    -webkit-transition: all .5s ease-out;
+}
+
+.fine-button {
+    background-color: rgba(0, 0, 0, 0.58);
+}

@@ -14,7 +14,6 @@ export class HomeComponent implements OnInit {
    }
 
   ngOnInit() {
-    this._service.runSwiper();
     this._service.runMaterialize();
   }
 

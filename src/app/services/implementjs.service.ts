@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 declare var swiperLoad:any;
 declare var initMaterialize:any;
+declare const initMaterializeModal:any;
 
 @Injectable()
 export class ImplementjsService {
@@ -13,5 +14,9 @@ export class ImplementjsService {
 
   runMaterialize() {
     return initMaterialize();
+  }
+
+  runMaterializeModal() {
+    return initMaterializeModal();
   }
 }

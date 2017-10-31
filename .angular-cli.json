@@ -21,7 +21,8 @@
       "styles": [
         "styles.css",
         "assets/css/allog.css",
-        "assets/css/swiper.min.css"
+        "assets/css/swiper.min.css",
+        "assets/css/bricklayer.min.css"
       ],
       "scripts": [
         "assets/js/jquery.min.js",
@@ -29,7 +30,8 @@
         "assets/js/swiper.min.js",
         "assets/js/swiper-allog.js",
         "assets/js/init-materialize.js",
-        "assets/js/pinterest-gallery.js"
+        "assets/js/pinterest-gallery.js",
+        "assets/js/bricklayer.min.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
