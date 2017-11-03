@@ -4,13 +4,14 @@
   <div *ngFor="let album of albums" class="col s12 m6">
     <div class="card large">
       <div class="card-image">
-          <a 
-            href="#modal1"
-            (click)="editAlbum(album, edittitle, editdescription)"
-            class="btn-floating btn-large modal-trigger waves-effect waves-light fine-button fine-button-edit"><i class="material-icons">edit</i></a>
-          <a 
-            (click)="removeAlbum(album)"
-            class="btn-floating btn-large waves-effect waves-light fine-button fine-button-delete"><i class="material-icons">delete</i></a>
+        <a *ngIf="auth.isAuthenticated()"
+          href="#modal1"
+          (click)="editAlbum(album, edittitle, editdescription)"
+          class="btn-floating btn-large modal-trigger waves-effect waves-light fine-button fine-button-edit"><i class="material-icons">edit</i></a>
+        <a *ngIf="auth.isAuthenticated()"
+          href="#modal2"
+          (click)="addToRemovedAlbum(album)"
+          class="btn-floating btn-large modal-trigger waves-effect waves-light fine-button fine-button-delete"><i class="material-icons">delete</i></a>
         <a [routerLink]="['/portfolio', album.title]">
         <img class="scaleable opacity-hover" src="{{ album.thumb }}"></a>
         <span class="card-title">{{ album.title }}</span>
@@ -19,13 +20,13 @@
         {{ album.description }}
       </div>
       <div class="card-action">
-      <a class="waves-effect waves-light btn modal-trigger" [routerLink]="['/portfolio', album.title]">Перейти к альбому</a>
+      <a class="waves-effect waves-light btn" [routerLink]="['/portfolio', album.title]">Перейти к альбому</a>
       </div>
     </div>
   </div>
 </div>
 
-<div class="row">
+<div *ngIf="auth.isAuthenticated()" class="row">
 <!-- ADD PHOTOALBUM -->
   <div class="col s12 m6">
     <div class="card large">
@@ -43,7 +44,7 @@
       <div class="card-action">
       <a 
         #showButton
-        class="waves-effect waves-light btn modal-trigger" 
+        class="waves-effect waves-light btn" 
         (click)="toggleNewForm($event)"
         href="#showform">Новый альбом</a>
       </div>
@@ -51,7 +52,7 @@
   </div>
 <!-- CREATE ALBUM FORM -->
 
-  <div *ngIf="activeNewForm" class="col s12 m6">
+  <div *ngIf="activeNewForm && auth.isAuthenticated()" class="col s12 m6">
       <div class="card large">
         <div class="card-image" style="background-color:white">
           <div ng2FileDrop
@@ -108,7 +109,7 @@
           <a 
             #submitButton
             (click)="createAlbum($event, newtitle, newdescription, albumPreviewPhoto, albumPreviewTitle, albumPreviewDescription)"
-            class="waves-effect waves-light btn modal-trigger" 
+            class="waves-effect waves-light btn" 
             href="/portfolio">Добавить альбом</a>
         </div>
       </div>
@@ -116,8 +117,8 @@
 
 </div>
 
-  <!-- Modal Structure -->
-  <div id="modal1" class="modal modal-fixed-footer">
+  <!-- EDIT ALBUM -->
+  <div *ngIf="auth.isAuthenticated()" id="modal1" class="modal modal-fixed-footer">
     <div class="modal-content">
       <h4 class="center-align">Редактировать альбом</h4>
       <div class="col s12 m6">
@@ -183,3 +184,17 @@
         class="modal-action modal-close waves-effect waves-green btn-flat">Сохранить</a>
     </div>
   </div>
+
+    <!-- ARE YOU SURE MODAL -->
+    <div *ngIf="auth.isAuthenticated()" id="modal2" class="modal modal-fixed-footer">
+      <div class="modal-content">
+       <h4>Вы уверены, что хотите удалить альбом?</h4>
+       <p>Удалятся также и все фотографии в альбоме.</p>
+      </div>
+      <div class="modal-footer">
+        <a 
+          (click)="removeAlbum()"
+          href="/portfolio" 
+          class="modal-action modal-close waves-effect waves-green btn-flat">Да</a>
+      </div>
+    </div>

@@ -71,14 +71,19 @@ router.post('/', (req, res, next) => {
 // Delete Album 
 router.put('/:id', (req, res, next) => {
     let album = req.body;
-    let dirname = DIR + album.title;
+    let dirname = DIR + album.param;
     db.albums.remove({_id: mongojs.ObjectId(req.params.id)},(err, album) => {
         if(err){
             sendError(err, res);
         }
         if (fs.existsSync(dirname)){ 
-            fs.rmdirSync(dirname);
+            rimraf.sync(dirname);
         }  
+        db.photos.remove({albumtitle: album.param},(err, photo) => {
+            if(err){
+              sendError(err, res);
+            }
+        });
         response.data = album;
         res.json(response);
     });

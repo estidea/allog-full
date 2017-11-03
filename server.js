@@ -4,6 +4,29 @@ const path = require('path');
 const http = require('http');
 const app = express();
 
+//JWT config
+const jwt = require('express-jwt');
+const jwksRsa = require('jwks-rsa');
+// Authentication middleware. When used, the
+// access token must exist and be verified against
+// the Auth0 JSON Web Key Set
+const checkJwt = jwt({
+    // Dynamically provide a signing key
+    // based on the kid in the header and 
+    // the singing keys provided by the JWKS endpoint.
+    secret: jwksRsa.expressJwtSecret({
+        cache: true,
+        rateLimit: true,
+        jwksRequestsPerMinute: 5,
+        jwksUri: `https://zames.eu.auth0.com/.well-known/jwks.json`
+    }),
+  
+    // Validate the audience and the issuer.
+        audience: 'https://zames.eu.auth0.com/api/v2/',
+        issuer: `https://zames.eu.auth0.com/`,
+        algorithms: ['RS256']
+});
+
 // API file for interacting with MongoDB
 const api = require('./server/routes/api');
 const photos = require('./server/routes/photos');

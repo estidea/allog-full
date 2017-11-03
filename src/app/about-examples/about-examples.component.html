@@ -1,21 +1,7 @@
 <h3 class="center-align">Случайные работы</h3>
 <div class="row">
-    <a href="#"> 
-        <img class="responsive-img img-thumb" src="assets/img/portraits.jpg">
+    <a *ngFor="let photo of photos" href="#"> 
+        <img class="responsive-img img-thumb" src="{{ photo.destination.substr(7) + '/' + photo.filename }}">
     </a>
-    <a href="#">
-        <img class="responsive-img img-thumb" src="assets/img/ch-b.jpg">
-    </a>
-    <a href="#">
-        <img class="responsive-img img-thumb" src="assets/img/nature.jpg">
-    </a>
-    <a href="#"> 
-        <img class="responsive-img img-thumb" src="assets/img/nature.jpg">
-    </a>
-    <a href="#"> 
-        <img class="responsive-img img-thumb" src="assets/img/ch-b.jpg">
-    </a>
-    <a href="#"> 
-        <img class="responsive-img img-thumb" src="assets/img/portraits.jpg">
-    </a>
+    
 </div>

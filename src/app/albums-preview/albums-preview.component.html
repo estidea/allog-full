@@ -1,9 +1,12 @@
 <div class="swiper-container">
     <div class="swiper-wrapper">
       <div 
-        *ngFor="let album of albums, let last = last" 
+        *ngFor="let album of albums" 
         class="swiper-slide" 
         [ngStyle]="{'background-image': 'url(' + album.thumb +')'}">
+        <a [routerLink]="['/portfolio', album.title]" class="hrefdiv">
+          Go to album
+        </a>
         <div class="image-caption light">
           {{ album.title }}
         </div>

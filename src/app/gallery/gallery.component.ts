@@ -1,3 +1,4 @@
+import { AuthService } from './../services/auth.service';
 import { ImplementjsService } from './../services/implementjs.service';
 import { UploadService } from './../services/upload.service';
 import { Component, OnInit } from '@angular/core';
@@ -13,13 +14,15 @@ const newURL = '/api/photos/new';
   styleUrls: ['./gallery.component.css']
 })
 export class GalleryComponent implements OnInit {
-
+  
   albums = [];
   activeNewForm = false;
   isEdited = false;
   title = '';
   description = '';
   thumb = '';
+  removedALbumId = 0;
+  removedALbumTitle ='';
   editedAlbum = {
     "_id": '',
     "title": '',
@@ -28,7 +31,10 @@ export class GalleryComponent implements OnInit {
     "oldTitle": ''
   }
 
-  constructor(private _UploadService: UploadService, private _implementService: ImplementjsService) { } 
+  constructor(
+    public auth: AuthService,
+    private _UploadService: UploadService, 
+    private _implementService: ImplementjsService) { } 
 
   ngOnInit() {
     this._implementService.runMaterializeModal()
@@ -83,7 +89,7 @@ export class GalleryComponent implements OnInit {
         this._UploadService.create(album)
           .subscribe(
             res => {
-              console.log('the album was created')
+              album['_id'] = res._id;
               this.albums.splice(0,0,album);
             }, 
             (error) => {
@@ -99,11 +105,16 @@ export class GalleryComponent implements OnInit {
     } else {console.log(this.title, this.description, this.thumb);} // TODO Error handler
   }
   // DELETE ALBUM
-  removeAlbum(album) {
-    this._UploadService.delete(album._id, album.title)
+  addToRemovedAlbum(album) {
+    this.removedALbumId = album._id;
+    this.removedALbumTitle = album.title;
+  }
+
+  removeAlbum() {
+    this._UploadService.delete(this.removedALbumId, this.removedALbumTitle)
       .subscribe(
         res => {
-          let index = this.albums.indexOf(album);
+          let index = this.albums.findIndex(x => x.title==this.removedALbumTitle);
           this.albums.splice(index, 1);
         }, 
         (error) => {
@@ -150,17 +161,5 @@ export class GalleryComponent implements OnInit {
         alert('An unexpected error occured');
      });
   }
-  // updateTask(task, newdata: HTMLInputElement) { 
-  //   let updtask = { "title": newdata.value, "isDone": task.isDone};
-  //   this._postsService.update(task._id, { title: newdata.value, isDone: task.isDone })
-  //     .subscribe(res => {
-  //       updtask['_id'] = task._id;
-  //       let index = this.tasks.indexOf(task);
-  //       this.tasks.splice(index, 1, updtask);
-  //     }, error => {
-  //       alert('An unexpected error occured');
-  //     });
-  // }  
-
 }
 

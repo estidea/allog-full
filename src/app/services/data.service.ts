@@ -20,7 +20,6 @@ export class DataService {
       return this._http.get(this._url)
         .map(result => this.result = result.json().data);
     }
-    
   }
 
   create(resourse) {
@@ -28,12 +27,9 @@ export class DataService {
       .map(result => this.result = result.json().data)
   }
 
-  delete(id, title?) {
-    return this._http.put(this._url + "/" + id, { "title": title });
+  delete(id, param?) {
+    return this._http.put(this._url + "/" + id, { "param": param });
   }
-  // delete(id, title?) {
-  //   return this._http.delete(this._url + "/" + id, title);
-  // }
 
   update(id, newdata) {
     return this._http.patch(this._url + "/" + id, newdata)

@@ -1,4 +1,4 @@
-<div class="container">
+<div *ngIf="auth.isAuthenticated()" class="container">
   <div class="row">
       <div class="col-md-3">
         <h3>Выберите файлы</h3>
@@ -43,12 +43,6 @@
                     <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
                 </td>
                 <td nowrap>
-                    <button type="button" class="btn btn-success btn-xs"
-                            #submitButton
-                            (click)="uploadPhotos($event)"
-                            [disabled]="item.isReady || item.isUploading || item.isSuccess">
-                        <span class="glyphicon glyphicon-upload"></span> Загрузить
-                    </button>
                     <button type="button" class="btn btn-warning btn-xs"
                             (click)="item.cancel()" [disabled]="!item.isUploading">
                         <span class="glyphicon glyphicon-ban-circle"></span> Отменить
@@ -69,8 +63,9 @@
                     <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
                 </div>
             </div>
+            
             <button type="button" class="btn btn-success btn-s"
-                    (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+                    (click)="uploadAllPhotos($event, uploader.queue)" [disabled]="!uploader.getNotUploadedItems().length">
                 <span class="glyphicon glyphicon-upload"></span> Загрузить все
             </button>
             <button type="button" class="btn btn-warning btn-s"
@@ -92,7 +87,7 @@
             class="col s12 m4 photo-div" 
             [ngStyle]="{'background-image': 'url(' + photo.destination.substr(7) + '/' + photo.filename + ')'}"
             >
-            <a 
+            <a *ngIf="auth.isAuthenticated()"
                 (click)="removePhoto(photo)" 
                 class="btn-floating btn-large waves-effect waves-light fine-button"><i class="material-icons">delete</i></a>
         </div>

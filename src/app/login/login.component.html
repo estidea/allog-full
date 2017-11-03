@@ -1,0 +1,15 @@
+<div class="container">
+  <h4>О, Вы попали на скрытую страницу</h4>
+  <p>Вообще-то, эта страница предназначена для входа администратора</p>
+  <p>Не знаю, как Вы на неё попали =)</p> 
+  <p>Вот Вам специальная кнопочка, чтобы перейти на моё портфолио и усладить свой взор фотографиями ^_^</p>
+  <a routerLink="/portfolio" class="btn btn-success">Перейти в портфолио</a>
+  <h4 *ngIf="auth.isAuthenticated() ; else nologin">
+     <a (click)="auth.logout()" class="btn btn-warning">Log Out</a>
+   </h4>
+  <ng-template #nologin>
+   <h4>
+     <a (click)="auth.login()" class="btn btn-success">Log In</a>
+   </h4>
+  </ng-template>
+</div>

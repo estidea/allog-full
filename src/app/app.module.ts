@@ -1,3 +1,4 @@
+import { AuthService } from './services/auth.service';
 import { PhotosService } from './services/photos.service';
 import { UploadService } from './services/upload.service';
 import { ImplementjsService } from './services/implementjs.service';
@@ -8,7 +9,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { HttpModule } from '@angular/http';
+import { HttpModule, Http, RequestOptions } from '@angular/http';
+// angular2-jwt config
+// import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { DataService } from './services/data.service';
 import { GalleryComponent } from './gallery/gallery.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -26,7 +29,11 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { BlogComponent } from './blog/blog.component';
 import { AboutPhotographerComponent } from './about-photographer/about-photographer.component';
 import { AlbumComponent } from './album/album.component';
+import { LoginComponent } from './login/login.component';
 
+// export function authHttpServiceFactory(http: Http, options: RequestOptions) {
+//   return new AuthHttp(new AuthConfig(), http, options);
+// }
 
 @NgModule({
   declarations: [
@@ -49,6 +56,7 @@ import { AlbumComponent } from './album/album.component';
     BlogComponent,
     AboutPhotographerComponent,
     AlbumComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -57,6 +65,7 @@ import { AlbumComponent } from './album/album.component';
       { path: '', component: HomeComponent },
       { path: 'about', component: AboutComponent },
       { path: 'portfolio', component: GalleryComponent },
+      { path: 'login', component: LoginComponent },
       { path: 'portfolio/:album', component: AlbumComponent },
       { path: '**', component: NotFoundComponent },
     ]),
@@ -66,7 +75,13 @@ import { AlbumComponent } from './album/album.component';
     TasksService,
     ImplementjsService,
     UploadService,
-    PhotosService
+    PhotosService,
+    AuthService
+    // {
+    //   provide: AuthHttp,
+    //   useFactory: authHttpServiceFactory,
+    //   deps: [Http, RequestOptions]
+    // }
   ],
   bootstrap: [AppComponent]
 })

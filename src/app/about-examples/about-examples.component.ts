@@ -1,3 +1,4 @@
+import { PhotosService } from './../services/photos.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AboutExamplesComponent implements OnInit {
 
-  constructor() { }
+  photos = [];
+
+  constructor(private _PhotosService: PhotosService) { 
+  }
 
   ngOnInit() {
+    this._PhotosService.getAll()
+      .subscribe(photos => {
+          this.photos = photos;
+      }, error => {
+        console.log('An unexpected error occured');
+      });
   }
 
 }

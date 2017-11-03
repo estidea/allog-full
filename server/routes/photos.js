@@ -3,6 +3,7 @@ const router = express.Router();
 const mongojs = require('mongojs');
 const multer = require('multer');
 const path = require('path');
+const fs=require('fs');
 
 const db = mongojs('mongodb://estidea:219592@ds111885.mlab.com:11885/allog', ['photos']);
 // Error handling
@@ -90,13 +91,29 @@ router.get('/:album', (req, res, next) => {
     })
 });
 
+// GET all photos
+router.get('/', (req, res, next) => {
+    db.photos.find((err, photos) => {
+        if(err){
+            // res.send(err);
+            sendError(err, res);
+        }
+        response.data = photos;
+        res.json(response);
+    })
+});
+
 
 // Delete Photo 
-router.delete('/:id', (req, res, next) => {
+router.put('/:id', (req, res, next) => {
+    let dir = req.body.param;
     db.photos.remove({_id: mongojs.ObjectId(req.params.id)},(err, photo) => {
         if(err){
           sendError(err, res);
         }
+        if (fs.existsSync(dir)){ 
+            fs.unlinkSync(dir);
+        }  
         response.data = photo;
         res.json(response);
     })

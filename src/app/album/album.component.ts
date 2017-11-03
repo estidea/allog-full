@@ -1,3 +1,4 @@
+import { AuthService } from './../services/auth.service';
 import { PhotosService } from './../services/photos.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -16,8 +17,12 @@ export class AlbumComponent implements OnInit {
   uploader:FileUploader;
   photos = [];
 
-  constructor(private _route:ActivatedRoute, private _PhotosService: PhotosService) { 
+  constructor(
+    public auth: AuthService,
+    private _route:ActivatedRoute, 
+    private _PhotosService: PhotosService) { 
   }
+
   
   ngOnInit() {
     //this._Implementservice.runBricklayer();
@@ -37,21 +42,21 @@ export class AlbumComponent implements OnInit {
     });
   }
   
-  uploadPhotos(e) {
-    e.preventDefault(); // TODO remove this
-    //     this._UploadService.create(album)
-    //       .subscribe(
-    //         res => {
-    //           console.log('the album was created')
-    //           this.albums.splice(0,0,album);
-    //         }, 
-    //         (error) => {
-    //           alert('An unexpected error occured');
-    //         });
-    //       newtitle.value='';
-    //       newdescription.value='';
-    //       albumPreviewPhoto.src = 'http://demo.warptheme.com/images/placeholder_600x400.svg';
-    // } // TODO if error
+  uploadAllPhotos(e, items) {
+    e.preventDefault();
+    let that = this;
+    let destination = './dist/uploads/' + this.title + '/';
+    items.forEach((item,index) => {
+      item.upload();
+      item.onSuccess = function(response, status, headers) {
+        let resp = this.uploader.queue[index]._xhr.response;
+        let jsonResponse = JSON.parse(resp);
+        let filename = jsonResponse.data[0].filename;
+        let id = jsonResponse.data[0]._id;
+        let newPhoto = { "_id": id,"destination": destination, "filename": filename };
+        that.photos.splice(0,0,newPhoto); 
+      }
+    });
   }
 
   hasBaseDropZoneOver:boolean = false;
@@ -61,7 +66,8 @@ export class AlbumComponent implements OnInit {
   }
   
   removePhoto(photo) {
-    this._PhotosService.delete(photo._id)
+    let destination = './dist/uploads/' + this.title + '/' + photo.filename;
+    this._PhotosService.delete(photo._id, destination)
     .subscribe(
       res => {
       let index = this.photos.indexOf(photo);
