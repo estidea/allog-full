@@ -4,8 +4,10 @@ const mongojs = require('mongojs');
 const multer = require('multer');
 const path = require('path');
 const fs=require('fs');
+const mkThumbs = require('./make-thumbs');
 
 const db = mongojs('mongodb://estidea:219592@ds111885.mlab.com:11885/allog', ['photos']);
+//const db = mongojs('mongodb://estidea:219592@ds151355.mlab.com:51355/allog-test', ['photos']);
 // Error handling
 const sendError = (err, res) => {
     response.status = 501;
@@ -36,6 +38,7 @@ router.post('/new', function (req, res) {
     let upload = multer({ storage: storageForAlbumThumbs }).array("photo", 40);
     upload(req, res, function (err) {
         let photo = req.files;
+        //photo[0].albumresponse = req.params.albumtitle; //TODO!!
         if (err) {
             sendError(err, res);
         }
@@ -51,7 +54,7 @@ router.post('/new', function (req, res) {
 });
 
 // POST new photos in album
-router.post('/new/:albumtitle', function (req, res) {
+router.post('/new/:albumtitle', function (req, res, next) {
     let storageForPhotosInAlbums = multer.diskStorage({
         destination: function(req, file, callback) {
             let photoInAlbumsDIR = './dist/uploads/' + req.params.albumtitle;
@@ -63,11 +66,13 @@ router.post('/new/:albumtitle', function (req, res) {
     })
     let upload = multer({ storage: storageForPhotosInAlbums }).array("photo", 40);
     upload(req, res, function (err) {
-        let photo = req.files;
-        photo[0].albumtitle = req.params.albumtitle;
         if (err) {
             sendError(err, res);
         } /* ===================================================== */
+        let photo = req.files;
+        console.log('ALBUM TITLE = ',req.params.albumtitle);
+        photo[0].albumtitle = req.params.albumtitle;
+        mkThumbs.makeThumbs(photo);
         db.photos.save(photo, (err, task) => {
             if(err){
                 sendError(err, res);
@@ -76,7 +81,7 @@ router.post('/new/:albumtitle', function (req, res) {
             res.json(response);
           });
         // Everything went fine
-    })
+    });
 });
 
 // GET all photos from current album
@@ -113,6 +118,9 @@ router.put('/:id', (req, res, next) => {
         }
         if (fs.existsSync(dir)){ 
             fs.unlinkSync(dir);
+            fs.unlinkSync(dir.substr(0, dir.length-4)+'-l'+dir.substr(-4,4));
+            fs.unlinkSync(dir.substr(0, dir.length-4)+'-m'+dir.substr(-4,4));
+            fs.unlinkSync(dir.substr(0, dir.length-4)+'-s'+dir.substr(-4,4));
         }  
         response.data = photo;
         res.json(response);

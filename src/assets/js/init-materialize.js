@@ -19,6 +19,7 @@ function initMaterializeModal() {
       outDuration: 200, // Transition out duration
       startingTop: '4%', // Starting top style attribute
       endingTop: '10%', // Ending top style attribute
+      keyboard: true
       // ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
       //   // alert("Ready");
       //   // console.log(modal, trigger);
@@ -27,4 +28,8 @@ function initMaterializeModal() {
     }
   );
   });
+}
+
+function closeModalBgLayer() {
+  $('.modal-overlay').trigger('click');
 }

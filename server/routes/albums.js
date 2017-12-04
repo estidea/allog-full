@@ -7,6 +7,8 @@ const fs=require('fs');
 const rimraf = require('rimraf');
 
 const db = mongojs('mongodb://estidea:219592@ds111885.mlab.com:11885/allog', ['albums', 'photos']);
+//const db = mongojs('mongodb://estidea:219592@ds151355.mlab.com:51355/allog-test', ['albums', 'photos']);
+
 // Error handling
 const sendError = (err, res) => {
     response.status = 501;
@@ -70,8 +72,8 @@ router.post('/', (req, res, next) => {
 
 // Delete Album 
 router.put('/:id', (req, res, next) => {
-    let album = req.body;
-    let dirname = DIR + album.param;
+    let rmalbum = req.body; 
+    let dirname = DIR + rmalbum.param; 
     db.albums.remove({_id: mongojs.ObjectId(req.params.id)},(err, album) => {
         if(err){
             sendError(err, res);
@@ -79,11 +81,13 @@ router.put('/:id', (req, res, next) => {
         if (fs.existsSync(dirname)){ 
             rimraf.sync(dirname);
         }  
-        db.photos.remove({albumtitle: album.param},(err, photo) => {
+        db.photos.remove({albumtitle: rmalbum.param},(err, photo) => {
             if(err){
               sendError(err, res);
             }
+            //console.log(photo);
         });
+        //console.log(rmalbum);
         response.data = album;
         res.json(response);
     });

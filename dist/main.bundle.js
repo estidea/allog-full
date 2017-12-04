@@ -34,7 +34,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/about-examples/about-examples.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h3 class=\"center-align\">Случайные работы</h3>\n<div class=\"row\">\n    <a *ngFor=\"let photo of photos\" href=\"#\"> \n        <img class=\"responsive-img img-thumb\" src=\"{{ photo.destination.substr(7) + '/' + photo.filename }}\">\n    </a>\n    \n</div>"
+module.exports = "<h3 class=\"center-align\">Случайные работы</h3>\n\n<div>\n    <div class=\"gallery bricklayer\" #mylocalvar>\n        <div *ngFor=\"let photo of photos\" class=\"photo-item\">\n                <img style=\"width:100%\" src=\"{{ photo.thumbs[2].substr(5) }}\">\n        </div>\n    </div>        \n</div>"
 
 /***/ }),
 
@@ -42,8 +42,9 @@ module.exports = "<h3 class=\"center-align\">Случайные работы</h3
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_photos_service__ = __webpack_require__("../../../../../src/app/services/photos.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_implementjs_service__ = __webpack_require__("../../../../../src/app/services/implementjs.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_photos_service__ = __webpack_require__("../../../../../src/app/services/photos.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AboutExamplesComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -56,32 +57,64 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 var AboutExamplesComponent = (function () {
-    function AboutExamplesComponent(_PhotosService) {
+    function AboutExamplesComponent(_PhotosService, _implementService) {
         this._PhotosService = _PhotosService;
+        this._implementService = _implementService;
         this.photos = [];
     }
+    AboutExamplesComponent.prototype.contains = function (arr, item) {
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i] === item) {
+                return true;
+            }
+        }
+        return false;
+    };
     AboutExamplesComponent.prototype.ngOnInit = function () {
         var _this = this;
         this._PhotosService.getAll()
             .subscribe(function (photos) {
-            _this.photos = photos;
+            var i = 0;
+            var usedRandom = [];
+            while (i < 8) {
+                var random = Math.floor(Math.random() * photos.length);
+                if (_this.contains(usedRandom, random) === false) {
+                    if ('thumbs' in photos[random]) {
+                        _this.photos[i] = photos[random];
+                        usedRandom.push(random);
+                        i++;
+                    }
+                }
+            }
         }, function (error) {
             console.log('An unexpected error occured');
         });
     };
+    AboutExamplesComponent.prototype.ngAfterViewInit = function () {
+        var _this = this;
+        this._implementService.runBrickLayerLoad();
+        this.mylist.changes.subscribe(function () {
+            _this._implementService.runBrickLayerLoad();
+        });
+    };
     return AboutExamplesComponent;
 }());
+__decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__angular_core__["ViewChildren"])('mylocalvar'),
+    __metadata("design:type", Object)
+], AboutExamplesComponent.prototype, "mylist", void 0);
 AboutExamplesComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Component"])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__angular_core__["Component"])({
         selector: 'app-about-examples',
         template: __webpack_require__("../../../../../src/app/about-examples/about-examples.component.html"),
         styles: [__webpack_require__("../../../../../src/app/about-examples/about-examples.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__services_photos_service__["a" /* PhotosService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__services_photos_service__["a" /* PhotosService */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_photos_service__["a" /* PhotosService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_photos_service__["a" /* PhotosService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__services_implementjs_service__["a" /* ImplementjsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__services_implementjs_service__["a" /* ImplementjsService */]) === "function" && _b || Object])
 ], AboutExamplesComponent);
 
-var _a;
+var _a, _b;
 //# sourceMappingURL=about-examples.component.js.map
 
 /***/ }),
@@ -168,7 +201,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/about/about.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n   <app-about-photographer></app-about-photographer>\n</div>\n<div class=\"parallax-container valign-wrapper\" style=\"min-height: 320px;\">\n  <div class=\"parallax\"><img src=\"assets/img/ch-b.jpg\" alt=\"Unsplashed background img 2\"></div>\n</div>\n<div class=\"container\">\n   <app-about-examples></app-about-examples>\n</div>\n"
+module.exports = "<div class=\"container\">\n   <app-about-photographer></app-about-photographer>\n</div>\n<!-- <div class=\"container\"> -->\n   <app-about-examples></app-about-examples>\n<!-- </div> -->\n"
 
 /***/ }),
 
@@ -216,7 +249,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".my-drop-zone { border: dotted 3px lightgray; }\n.nv-file-over { border: dotted 3px red; } /* Default class applied to drop zones on over */\n.another-file-over-class { border: dotted 3px green; }\n\nhtml, body { height: 100%; }\n\n.photo-container-wrapper {\n\n}\n\n.photo-div {\n    height:300px;\n    background-size: cover;\n    background-position: center center;\n}\n\n.photo-div:hover {\n    /*opacity: .8;*/\n    box-shadow: inset 0 0 0 2px black;\n\n}\n\n.fine-button {\n    background-color: rgba(0, 0, 0, 0.58);\n}\n", ""]);
+exports.push([module.i, ".my-drop-zone { border: dotted 3px lightgray; }\n.nv-file-over { border: dotted 3px red; } /* Default class applied to drop zones on over */\n.another-file-over-class { border: dotted 3px green; }\n\n.bricklayer {\n  padding-top: .7rem;\n}\n\n.bricklayer-column {\n  padding-left: 3px;\n  padding-right: 3px;\n}\n\n.fine-button {\n  position: absolute;\n  top: 1rem;\n  left: 1rem;\n  background-color: rgba(0, 0, 0, 0.58);\n}\n\n.photo-item {\n  position: relative;\n}\n\n\n@media screen and (min-width: 1200px) {\n    .bricklayer-column-sizer {\n      /* divide by 3. */\n      width: 33.3%;\n    }\n  }\n  \n@media screen and (min-width: 768px) {\n  .bricklayer-column-sizer {\n    /* divide by 2. */\n    width: 50%;\n  }\n}\n\n.current-photo {\n  top: 0% !important;\n  max-height: 100%;\n  border-radius: 0;\n  width: auto;\n  margin: 0 auto;\n  -webkit-transform: translate(-50%) !important;\n          transform: translate(-50%) !important;\n  left: 50%;\n  right: inherit;\n  background-color: rgba(250, 250, 250, 0);\n  overflow: visible;\n}\n\n.current-photo-content {\n  padding: 0;\n}\n\n.large-photo-view {\n  height: 100vh;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  margin: auto;\n  cursor: pointer;\n}\n\n.full-size-display {\n  width: 100vw;\n}\n\n.narrow {\n  position: absolute;\n  top: 50%;\n  color: white;\n  -webkit-transform: translate(0,-50%);\n          transform: translate(0,-50%);\n  cursor: pointer;\n}\n\n.exit-icon {\n  position: absolute;\n  top: 5%;\n  right: 5%;\n  color: white;\n  cursor: pointer;\n}\n\n.prev-narrow {\n  left: 1rem;\n}\n\n.next-narrow {\n  right: 1rem;\n}\n\n.prev-narrow:hover, .next-narrow:hover, .exit-icon:hover {\n  background-color: rgba(0, 0, 0, 0.67);\n}", ""]);
 
 // exports
 
@@ -229,7 +262,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/album/album.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"auth.isAuthenticated()\" class=\"container\">\n  <div class=\"row\">\n      <div class=\"col-md-3\">\n        <h3>Выберите файлы</h3>\n        <div ng2FileDrop\n          [ngClass]=\"{'nv-file-over': hasBaseDropZoneOver}\"\n          (fileOver)=\"fileOverBase($event)\"\n          [uploader]=\"uploader\"\n          class=\"well my-drop-zone\">\n          Перетяните фотографии в эту зону\n        </div>\n        Или нажмите на кнопку\n        <input type=\"file\" ng2FileSelect [uploader]=\"uploader\" multiple  /><br/>\n    </div>\n\n    <div class=\"col-md-9\" style=\"margin-bottom: 40px\">\n\n        <h3>Очередь загрузки</h3>\n        <p>Количество фотографий: {{ uploader?.queue?.length }}</p>\n\n        <table class=\"table\">\n            <thead>\n            <tr>\n                <th width=\"50%\">Имя</th>\n                <th>Размер</th>\n                <th>Состояние</th>\n                <th>Статус</th>\n                <th>Действия</th>\n            </tr>\n            </thead>\n            <tbody>\n            <tr *ngFor=\"let item of uploader.queue\">\n                <td><strong>{{ item?.file?.name }}</strong></td>\n                <td nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>\n                <td>\n                    <div class=\"progress\" style=\"margin-bottom: 0;\">\n                        <div class=\"progress-bar\" role=\"progressbar\" [ngStyle]=\"{ 'width': item.progress + '%' }\"></div>\n                    </div>\n                </td>\n                <td class=\"text-center\">\n                    <span *ngIf=\"item.isSuccess\"><i class=\"glyphicon glyphicon-ok\"></i></span>\n                    <span *ngIf=\"item.isCancel\"><i class=\"glyphicon glyphicon-ban-circle\"></i></span>\n                    <span *ngIf=\"item.isError\"><i class=\"glyphicon glyphicon-remove\"></i></span>\n                </td>\n                <td nowrap>\n                    <button type=\"button\" class=\"btn btn-warning btn-xs\"\n                            (click)=\"item.cancel()\" [disabled]=\"!item.isUploading\">\n                        <span class=\"glyphicon glyphicon-ban-circle\"></span> Отменить\n                    </button>\n                    <button type=\"button\" class=\"btn btn-danger btn-xs\"\n                            (click)=\"item.remove()\">\n                        <span class=\"glyphicon glyphicon-trash\"></span> Удалить\n                    </button>\n                </td>\n            </tr>\n            </tbody>\n        </table>\n\n        <div>\n            <div>\n                Загружено:\n                <div class=\"progress\" style=\"\">\n                    <div class=\"progress-bar\" role=\"progressbar\" [ngStyle]=\"{ 'width': uploader.progress + '%' }\"></div>\n                </div>\n            </div>\n            \n            <button type=\"button\" class=\"btn btn-success btn-s\"\n                    (click)=\"uploadAllPhotos($event, uploader.queue)\" [disabled]=\"!uploader.getNotUploadedItems().length\">\n                <span class=\"glyphicon glyphicon-upload\"></span> Загрузить все\n            </button>\n            <button type=\"button\" class=\"btn btn-warning btn-s\"\n                    (click)=\"uploader.cancelAll()\" [disabled]=\"!uploader.isUploading\">\n                <span class=\"glyphicon glyphicon-ban-circle\"></span> Отменить все\n            </button>\n            <button type=\"button\" class=\"btn btn-danger btn-s\"\n                    (click)=\"uploader.clearQueue()\" [disabled]=\"!uploader.queue.length\">\n                <span class=\"glyphicon glyphicon-trash\"></span> Удалить все\n            </button>\n        </div>\n    </div>\n  </div>\n</div>\n<div class=\"photo-container-wrapper\">\n    <div class=\"row\">\n        <div \n            *ngFor=\"let photo of photos\" \n            class=\"col s12 m4 photo-div\" \n            [ngStyle]=\"{'background-image': 'url(' + photo.destination.substr(7) + '/' + photo.filename + ')'}\"\n            >\n            <a *ngIf=\"auth.isAuthenticated()\"\n                (click)=\"removePhoto(photo)\" \n                class=\"btn-floating btn-large waves-effect waves-light fine-button\"><i class=\"material-icons\">delete</i></a>\n        </div>\n    </div>\n</div>\n"
+module.exports = "<div *ngIf=\"auth.isAuthenticated()\" class=\"container\">\n  <div class=\"row\">\n      <div class=\"col-md-3\">\n        <h3>Выберите файлы</h3>\n        <div ng2FileDrop\n          [ngClass]=\"{'nv-file-over': hasBaseDropZoneOver}\"\n          (fileOver)=\"fileOverBase($event)\"\n          [uploader]=\"uploader\"\n          class=\"well my-drop-zone\">\n          Перетяните фотографии в эту зону\n        </div>\n        Или нажмите на кнопку\n        <input type=\"file\" ng2FileSelect [uploader]=\"uploader\" multiple  /><br/>\n    </div>\n\n    <div class=\"col-md-9\" style=\"margin-bottom: 40px\">\n\n        <h3>Очередь загрузки</h3>\n        <p>Количество фотографий: {{ uploader?.queue?.length }}</p>\n\n        <table class=\"table\">\n            <thead>\n            <tr>\n                <th width=\"50%\">Имя</th>\n                <th>Размер</th>\n                <th>Состояние</th>\n                <th>Статус</th>\n                <th>Действия</th>\n            </tr>\n            </thead>\n            <tbody>\n            <tr *ngFor=\"let item of uploader.queue\">\n                <td><strong>{{ item?.file?.name }}</strong></td>\n                <td nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>\n                <td>\n                    <div class=\"progress\" style=\"margin-bottom: 0;\">\n                        <div class=\"progress-bar\" role=\"progressbar\" [ngStyle]=\"{ 'width': item.progress + '%' }\"></div>\n                    </div>\n                </td>\n                <td class=\"text-center\">\n                    <span *ngIf=\"item.isSuccess\"><i class=\"glyphicon glyphicon-ok\"></i></span>\n                    <span *ngIf=\"item.isCancel\"><i class=\"glyphicon glyphicon-ban-circle\"></i></span>\n                    <span *ngIf=\"item.isError\"><i class=\"glyphicon glyphicon-remove\"></i></span>\n                </td>\n                <td nowrap>\n                    <button type=\"button\" class=\"btn btn-warning btn-xs\"\n                            (click)=\"item.cancel()\" [disabled]=\"!item.isUploading\">\n                        <span class=\"glyphicon glyphicon-ban-circle\"></span> Отменить\n                    </button>\n                    <button type=\"button\" class=\"btn btn-danger btn-xs\"\n                            (click)=\"item.remove()\">\n                        <span class=\"glyphicon glyphicon-trash\"></span> Удалить\n                    </button>\n                </td>\n            </tr>\n            </tbody>\n        </table>\n\n        <div>\n            <div>\n                Загружено:\n                <div class=\"progress\" style=\"\">\n                    <div class=\"progress-bar\" role=\"progressbar\" [ngStyle]=\"{ 'width': uploader.progress + '%' }\"></div>\n                </div>\n            </div>\n            \n            <button type=\"button\" class=\"btn btn-success btn-s\"\n                    (click)=\"uploadAllPhotos($event, uploader.queue)\" [disabled]=\"!uploader.getNotUploadedItems().length\">\n                <span class=\"glyphicon glyphicon-upload\"></span> Загрузить все\n            </button>\n            <button type=\"button\" class=\"btn btn-warning btn-s\"\n                    (click)=\"uploader.cancelAll()\" [disabled]=\"!uploader.isUploading\">\n                <span class=\"glyphicon glyphicon-ban-circle\"></span> Отменить все\n            </button>\n            <button type=\"button\" class=\"btn btn-danger btn-s\"\n                    (click)=\"uploader.clearQueue()\" [disabled]=\"!uploader.queue.length\">\n                <span class=\"glyphicon glyphicon-trash\"></span> Удалить все\n            </button>\n        </div>\n    </div>\n  </div>\n</div>\n<!-- <div class=\"photo-container-wrapper\">\n    <div class=\"row\">\n        <div \n            *ngFor=\"let photo of photos\" \n            class=\"col s12 m4 photo-div\" \n            [ngStyle]=\"{'background-image': 'url(' + photo.destination.substr(7) + '/' + photo.filename + ')'}\"\n            >\n            <a *ngIf=\"auth.isAuthenticated()\"\n                (click)=\"removePhoto(photo)\" \n                class=\"btn-floating btn-large waves-effect waves-light fine-button\"><i class=\"material-icons\">delete</i></a>\n        </div>\n    </div>\n</div> -->\n\n<!-- <div class=\"bricklayer\" #mylocalvar>\n    <div *ngFor=\"let photo of photos\" class=\"photo-item\">\n\n         <img style=\"width:100%\" src=\"{{ photo.thumbs[1].substr(5) }}\">\n        <a *ngIf=\"auth.isAuthenticated()\"\n        (click)=\"removePhoto(photo)\" \n        class=\"btn-floating btn-large waves-effect waves-light fine-button\"><i class=\"material-icons\">delete</i></a>\n    </div>\n</div> -->\n<div\n    [style.visibility]=\"isDivVisible ? 'visible' : 'hidden'\"\n    #modalPhoto\n    tabindex=\"1\"\n    (keyup.ArrowRight)=\"nextImage()\"\n    (keyup.ArrowRight)=\"prevImage()\" \n    id=\"show-photo\" \n    class=\"modal current-photo\">  \n    <div class=\"modal-content current-photo-content\">\n        <img (click)=\"nextImage()\" class=\"large-photo-view\" src=\"{{ currentPhoto.thumbs[0].substr(5) }}\">\n    </div>\n    <div class=\"full-size-display\">\n        <div class=\"narrow prev-narrow\">\n            <i \n                (click)=\"prevImage()\"\n                class=\"large material-icons\">navigate_before</i>\n        </div>\n        <div class=\"exit-icon\">\n            <i \n                (click)=\"closeModal()\"\n                class=\"large material-icons\">clear</i>\n        </div>\n        <div class=\"narrow next-narrow\">\n            <i \n                (click)=\"nextImage()\"\n                class=\"large material-icons\">navigate_next</i>\n        </div>\n    </div>\n</div>\n\n<div>\n    <div class=\"gallery bricklayer\" #mylocalvar>\n        <div *ngFor=\"let photo of photos\" class=\"photo-item\">\n            <a \n                href=\"#show-photo\" \n                class=\"modal-trigger\"\n                (click)=\"setCurrentPhoto(photo)\">\n                <img style=\"width:100%\" src=\"{{ photo.thumbs[1].substr(5) }}\">\n            </a>\n        </div>\n    </div>        \n</div>\n\n\n"
 
 /***/ }),
 
@@ -237,12 +270,13 @@ module.exports = "<div *ngIf=\"auth.isAuthenticated()\" class=\"container\">\n  
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_auth_service__ = __webpack_require__("../../../../../src/app/services/auth.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_photos_service__ = __webpack_require__("../../../../../src/app/services/photos.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_file_upload__ = __webpack_require__("../../../../ng2-file-upload/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_file_upload___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_ng2_file_upload__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_implementjs_service__ = __webpack_require__("../../../../../src/app/services/implementjs.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__("../../../../../src/app/services/auth.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_photos_service__ = __webpack_require__("../../../../../src/app/services/photos.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_file_upload__ = __webpack_require__("../../../../ng2-file-upload/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_file_upload___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_ng2_file_upload__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AlbumComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -258,32 +292,43 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-// const newURL = '/api/photos/new';
+
 var AlbumComponent = (function () {
-    function AlbumComponent(auth, _route, _PhotosService) {
+    function AlbumComponent(auth, _implementService, _route, _PhotosService) {
         this.auth = auth;
+        this._implementService = _implementService;
         this._route = _route;
         this._PhotosService = _PhotosService;
         this.title = '';
         this.url = '/api/photos/new/';
         this.photos = [];
+        this.currentPhoto = { thumbs: [''] };
+        this.prevIndex = 0;
+        this.nextIndex = 0;
+        this.isDivVisible = false;
         this.hasBaseDropZoneOver = false;
     }
     AlbumComponent.prototype.ngOnInit = function () {
         var _this = this;
-        //this._Implementservice.runBricklayer();
+        this._implementService.runMaterializeModal();
         this._route.paramMap
             .subscribe(function (params) {
-            //key = album.title
             _this.title = params.get('album');
             _this.url = _this.url + _this.title;
-            _this.uploader = new __WEBPACK_IMPORTED_MODULE_4_ng2_file_upload__["FileUploader"]({ url: _this.url, itemAlias: 'photo' });
+            _this.uploader = new __WEBPACK_IMPORTED_MODULE_5_ng2_file_upload__["FileUploader"]({ url: _this.url, itemAlias: 'photo' });
         });
         this._PhotosService.getAll(this.title)
             .subscribe(function (photos) {
             _this.photos = photos;
         }, function (error) {
             alert('An unexpected error occured');
+        });
+    };
+    AlbumComponent.prototype.ngAfterViewInit = function () {
+        var _this = this;
+        this._implementService.runBrickLayerLoad();
+        this.mylist.changes.subscribe(function () {
+            _this._implementService.runBrickLayerLoad();
         });
     };
     AlbumComponent.prototype.uploadAllPhotos = function (e, items) {
@@ -297,6 +342,7 @@ var AlbumComponent = (function () {
                 var jsonResponse = JSON.parse(resp);
                 var filename = jsonResponse.data[0].filename;
                 var id = jsonResponse.data[0]._id;
+                console.log(jsonResponse.data[0]);
                 var newPhoto = { "_id": id, "destination": destination, "filename": filename };
                 that.photos.splice(0, 0, newPhoto);
             };
@@ -316,18 +362,76 @@ var AlbumComponent = (function () {
             alert('An unexpected error occured');
         });
     };
+    /* Show modal photo */
+    AlbumComponent.prototype.setCurrentPhoto = function (photo) {
+        this.isDivVisible = true;
+        this.currentPhoto = photo;
+        var index = this.photos.indexOf(photo);
+        var quantity = this.photos.length;
+        if (index == 0)
+            this.prevIndex = quantity - 1;
+        else
+            this.prevIndex = index - 1;
+        if (index == quantity - 1)
+            this.nextIndex = 0;
+        else
+            this.nextIndex = index + 1;
+    };
+    AlbumComponent.prototype.prevImage = function () {
+        var quantity = this.photos.length;
+        if (this.prevIndex < 0) {
+            this.prevIndex = quantity - 2;
+            this.nextIndex--;
+        }
+        else if (this.nextIndex = 0) {
+            this.prevIndex--;
+            this.nextIndex = quantity - 1;
+        }
+        else {
+            this.prevIndex--;
+            this.nextIndex--;
+        }
+        this.currentPhoto = this.photos[this.prevIndex + 1];
+    };
+    AlbumComponent.prototype.nextImage = function () {
+        var quantity = this.photos.length;
+        if (this.nextIndex == quantity - 1) {
+            this.prevIndex++;
+            this.nextIndex = 0;
+            this.currentPhoto = this.photos[this.prevIndex + 1];
+        }
+        else if (this.prevIndex == quantity - 1) {
+            this.prevIndex = 0;
+            this.nextIndex++;
+            this.currentPhoto = this.photos[this.prevIndex + 1];
+        }
+        else {
+            this.prevIndex++;
+            this.nextIndex++;
+            var index = this.nextIndex - 1;
+            this.currentPhoto = this.photos[index];
+        }
+    };
+    AlbumComponent.prototype.closeModal = function (modalPhoto) {
+        this.isDivVisible = false;
+        this._implementService.runCloseModalBgLayer();
+    };
     return AlbumComponent;
 }());
+__decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__angular_core__["ViewChildren"])('mylocalvar'),
+    __metadata("design:type", Object)
+], AlbumComponent.prototype, "mylist", void 0);
 AlbumComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__angular_core__["Component"])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__angular_core__["Component"])({
         selector: 'app-album',
         template: __webpack_require__("../../../../../src/app/album/album.component.html"),
         styles: [__webpack_require__("../../../../../src/app/album/album.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__services_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__services_auth_service__["a" /* AuthService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* ActivatedRoute */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__services_photos_service__["a" /* PhotosService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_photos_service__["a" /* PhotosService */]) === "function" && _c || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_auth_service__["a" /* AuthService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__services_implementjs_service__["a" /* ImplementjsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__services_implementjs_service__["a" /* ImplementjsService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["c" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["c" /* ActivatedRoute */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__services_photos_service__["a" /* PhotosService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_photos_service__["a" /* PhotosService */]) === "function" && _d || Object])
 ], AlbumComponent);
 
-var _a, _b, _c;
+var _a, _b, _c, _d;
 //# sourceMappingURL=album.component.js.map
 
 /***/ }),
@@ -492,31 +596,36 @@ var _a;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_upload_service__ = __webpack_require__("../../../../../src/app/services/upload.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_implementjs_service__ = __webpack_require__("../../../../../src/app/services/implementjs.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__home_home_component__ = __webpack_require__("../../../../../src/app/home/home.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_tasks_service__ = __webpack_require__("../../../../../src/app/services/tasks.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_platform_browser__ = __webpack_require__("../../../platform-browser/@angular/platform-browser.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__app_component__ = __webpack_require__("../../../../../src/app/app.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__services_data_service__ = __webpack_require__("../../../../../src/app/services/data.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__gallery_gallery_component__ = __webpack_require__("../../../../../src/app/gallery/gallery.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__navbar_navbar_component__ = __webpack_require__("../../../../../src/app/navbar/navbar.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__upload_upload_component__ = __webpack_require__("../../../../../src/app/upload/upload.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_ng2_file_upload__ = __webpack_require__("../../../../ng2-file-upload/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_ng2_file_upload___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15_ng2_file_upload__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__header_header_component__ = __webpack_require__("../../../../../src/app/header/header.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__albums_preview_albums_preview_component__ = __webpack_require__("../../../../../src/app/albums-preview/albums-preview.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__about_about_component__ = __webpack_require__("../../../../../src/app/about/about.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__about_examples_about_examples_component__ = __webpack_require__("../../../../../src/app/about-examples/about-examples.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__rescent_instagram_rescent_instagram_component__ = __webpack_require__("../../../../../src/app/rescent-instagram/rescent-instagram.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__footer_footer_component__ = __webpack_require__("../../../../../src/app/footer/footer.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__social_links_social_links_component__ = __webpack_require__("../../../../../src/app/social-links/social-links.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__image_detail_image_detail_component__ = __webpack_require__("../../../../../src/app/image-detail/image-detail.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__not_found_not_found_component__ = __webpack_require__("../../../../../src/app/not-found/not-found.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__blog_blog_component__ = __webpack_require__("../../../../../src/app/blog/blog.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_platform_browser__ = __webpack_require__("../../../platform-browser/@angular/platform-browser.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_hammerjs__ = __webpack_require__("../../../../hammerjs/hammer.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_hammerjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_hammerjs__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_mousetrap__ = __webpack_require__("../../../../mousetrap/mousetrap.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_mousetrap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_mousetrap__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_angular_modal_gallery__ = __webpack_require__("../../../../angular-modal-gallery/angular-modal-gallery.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__app_component__ = __webpack_require__("../../../../../src/app/app.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__services_data_service__ = __webpack_require__("../../../../../src/app/services/data.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__gallery_gallery_component__ = __webpack_require__("../../../../../src/app/gallery/gallery.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__navbar_navbar_component__ = __webpack_require__("../../../../../src/app/navbar/navbar.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__upload_upload_component__ = __webpack_require__("../../../../../src/app/upload/upload.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17_ng2_file_upload__ = __webpack_require__("../../../../ng2-file-upload/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17_ng2_file_upload___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_17_ng2_file_upload__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__header_header_component__ = __webpack_require__("../../../../../src/app/header/header.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__albums_preview_albums_preview_component__ = __webpack_require__("../../../../../src/app/albums-preview/albums-preview.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__about_about_component__ = __webpack_require__("../../../../../src/app/about/about.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__about_examples_about_examples_component__ = __webpack_require__("../../../../../src/app/about-examples/about-examples.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__rescent_instagram_rescent_instagram_component__ = __webpack_require__("../../../../../src/app/rescent-instagram/rescent-instagram.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__footer_footer_component__ = __webpack_require__("../../../../../src/app/footer/footer.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__social_links_social_links_component__ = __webpack_require__("../../../../../src/app/social-links/social-links.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__not_found_not_found_component__ = __webpack_require__("../../../../../src/app/not-found/not-found.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__about_photographer_about_photographer_component__ = __webpack_require__("../../../../../src/app/about-photographer/about-photographer.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__album_album_component__ = __webpack_require__("../../../../../src/app/album/album.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__login_login_component__ = __webpack_require__("../../../../../src/app/login/login.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__inspiration_inspiration_component__ = __webpack_require__("../../../../../src/app/inspiration/inspiration.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__my_services_my_services_component__ = __webpack_require__("../../../../../src/app/my-services/my-services.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__contacts_contacts_component__ = __webpack_require__("../../../../../src/app/contacts/contacts.component.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -524,6 +633,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -555,6 +666,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
 // export function authHttpServiceFactory(http: Http, options: RequestOptions) {
 //   return new AuthHttp(new AuthConfig(), http, options);
 // }
@@ -564,44 +676,48 @@ var AppModule = (function () {
     return AppModule;
 }());
 AppModule = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7__angular_core__["NgModule"])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__angular_core__["NgModule"])({
         declarations: [
-            __WEBPACK_IMPORTED_MODULE_15_ng2_file_upload__["FileDropDirective"],
-            __WEBPACK_IMPORTED_MODULE_15_ng2_file_upload__["FileSelectDirective"],
-            __WEBPACK_IMPORTED_MODULE_9__app_component__["a" /* AppComponent */],
-            __WEBPACK_IMPORTED_MODULE_12__gallery_gallery_component__["a" /* GalleryComponent */],
-            __WEBPACK_IMPORTED_MODULE_13__navbar_navbar_component__["a" /* NavbarComponent */],
-            __WEBPACK_IMPORTED_MODULE_14__upload_upload_component__["a" /* UploadComponent */],
-            __WEBPACK_IMPORTED_MODULE_16__header_header_component__["a" /* HeaderComponent */],
-            __WEBPACK_IMPORTED_MODULE_17__albums_preview_albums_preview_component__["a" /* AlbumsPreviewComponent */],
-            __WEBPACK_IMPORTED_MODULE_18__about_about_component__["a" /* AboutComponent */],
-            __WEBPACK_IMPORTED_MODULE_19__about_examples_about_examples_component__["a" /* AboutExamplesComponent */],
-            __WEBPACK_IMPORTED_MODULE_20__rescent_instagram_rescent_instagram_component__["a" /* RescentInstagramComponent */],
-            __WEBPACK_IMPORTED_MODULE_21__footer_footer_component__["a" /* FooterComponent */],
-            __WEBPACK_IMPORTED_MODULE_22__social_links_social_links_component__["a" /* SocialLinksComponent */],
+            __WEBPACK_IMPORTED_MODULE_17_ng2_file_upload__["FileDropDirective"],
+            __WEBPACK_IMPORTED_MODULE_17_ng2_file_upload__["FileSelectDirective"],
+            __WEBPACK_IMPORTED_MODULE_11__app_component__["a" /* AppComponent */],
+            __WEBPACK_IMPORTED_MODULE_14__gallery_gallery_component__["a" /* GalleryComponent */],
+            __WEBPACK_IMPORTED_MODULE_15__navbar_navbar_component__["a" /* NavbarComponent */],
+            __WEBPACK_IMPORTED_MODULE_16__upload_upload_component__["a" /* UploadComponent */],
+            __WEBPACK_IMPORTED_MODULE_18__header_header_component__["a" /* HeaderComponent */],
+            __WEBPACK_IMPORTED_MODULE_19__albums_preview_albums_preview_component__["a" /* AlbumsPreviewComponent */],
+            __WEBPACK_IMPORTED_MODULE_20__about_about_component__["a" /* AboutComponent */],
+            __WEBPACK_IMPORTED_MODULE_21__about_examples_about_examples_component__["a" /* AboutExamplesComponent */],
+            __WEBPACK_IMPORTED_MODULE_22__rescent_instagram_rescent_instagram_component__["a" /* RescentInstagramComponent */],
+            __WEBPACK_IMPORTED_MODULE_23__footer_footer_component__["a" /* FooterComponent */],
+            __WEBPACK_IMPORTED_MODULE_24__social_links_social_links_component__["a" /* SocialLinksComponent */],
             __WEBPACK_IMPORTED_MODULE_4__home_home_component__["a" /* HomeComponent */],
-            __WEBPACK_IMPORTED_MODULE_23__image_detail_image_detail_component__["a" /* ImageDetailComponent */],
-            __WEBPACK_IMPORTED_MODULE_24__not_found_not_found_component__["a" /* NotFoundComponent */],
-            __WEBPACK_IMPORTED_MODULE_25__blog_blog_component__["a" /* BlogComponent */],
+            __WEBPACK_IMPORTED_MODULE_25__not_found_not_found_component__["a" /* NotFoundComponent */],
             __WEBPACK_IMPORTED_MODULE_26__about_photographer_about_photographer_component__["a" /* AboutPhotographerComponent */],
             __WEBPACK_IMPORTED_MODULE_27__album_album_component__["a" /* AlbumComponent */],
-            __WEBPACK_IMPORTED_MODULE_28__login_login_component__["a" /* LoginComponent */]
+            __WEBPACK_IMPORTED_MODULE_28__login_login_component__["a" /* LoginComponent */],
+            __WEBPACK_IMPORTED_MODULE_29__inspiration_inspiration_component__["a" /* InspirationComponent */],
+            __WEBPACK_IMPORTED_MODULE_30__my_services_my_services_component__["a" /* MyServicesComponent */],
+            __WEBPACK_IMPORTED_MODULE_31__contacts_contacts_component__["a" /* ContactsComponent */]
         ],
         imports: [
-            __WEBPACK_IMPORTED_MODULE_6__angular_platform_browser__["a" /* BrowserModule */],
-            __WEBPACK_IMPORTED_MODULE_10__angular_http__["a" /* HttpModule */],
-            __WEBPACK_IMPORTED_MODULE_8__angular_router__["a" /* RouterModule */].forRoot([
+            __WEBPACK_IMPORTED_MODULE_5__angular_platform_browser__["a" /* BrowserModule */],
+            __WEBPACK_IMPORTED_MODULE_12__angular_http__["a" /* HttpModule */],
+            __WEBPACK_IMPORTED_MODULE_10_angular_modal_gallery__["a" /* ModalGalleryModule */].forRoot(),
+            __WEBPACK_IMPORTED_MODULE_7__angular_router__["a" /* RouterModule */].forRoot([
                 { path: '', component: __WEBPACK_IMPORTED_MODULE_4__home_home_component__["a" /* HomeComponent */] },
-                { path: 'about', component: __WEBPACK_IMPORTED_MODULE_18__about_about_component__["a" /* AboutComponent */] },
-                { path: 'portfolio', component: __WEBPACK_IMPORTED_MODULE_12__gallery_gallery_component__["a" /* GalleryComponent */] },
+                { path: 'about', component: __WEBPACK_IMPORTED_MODULE_20__about_about_component__["a" /* AboutComponent */] },
+                { path: 'portfolio', component: __WEBPACK_IMPORTED_MODULE_14__gallery_gallery_component__["a" /* GalleryComponent */] },
+                { path: 'inspiration', component: __WEBPACK_IMPORTED_MODULE_29__inspiration_inspiration_component__["a" /* InspirationComponent */] },
+                { path: 'my-services', component: __WEBPACK_IMPORTED_MODULE_30__my_services_my_services_component__["a" /* MyServicesComponent */] },
+                { path: 'contacts', component: __WEBPACK_IMPORTED_MODULE_31__contacts_contacts_component__["a" /* ContactsComponent */] },
                 { path: 'login', component: __WEBPACK_IMPORTED_MODULE_28__login_login_component__["a" /* LoginComponent */] },
                 { path: 'portfolio/:album', component: __WEBPACK_IMPORTED_MODULE_27__album_album_component__["a" /* AlbumComponent */] },
-                { path: '**', component: __WEBPACK_IMPORTED_MODULE_24__not_found_not_found_component__["a" /* NotFoundComponent */] },
+                { path: '**', component: __WEBPACK_IMPORTED_MODULE_25__not_found_not_found_component__["a" /* NotFoundComponent */] },
             ]),
         ],
         providers: [
-            __WEBPACK_IMPORTED_MODULE_11__services_data_service__["a" /* DataService */],
-            __WEBPACK_IMPORTED_MODULE_5__services_tasks_service__["a" /* TasksService */],
+            __WEBPACK_IMPORTED_MODULE_13__services_data_service__["a" /* DataService */],
             __WEBPACK_IMPORTED_MODULE_3__services_implementjs_service__["a" /* ImplementjsService */],
             __WEBPACK_IMPORTED_MODULE_2__services_upload_service__["a" /* UploadService */],
             __WEBPACK_IMPORTED_MODULE_1__services_photos_service__["a" /* PhotosService */],
@@ -612,7 +728,7 @@ AppModule = __decorate([
             //   deps: [Http, RequestOptions]
             // }
         ],
-        bootstrap: [__WEBPACK_IMPORTED_MODULE_9__app_component__["a" /* AppComponent */]]
+        bootstrap: [__WEBPACK_IMPORTED_MODULE_11__app_component__["a" /* AppComponent */]]
     })
 ], AppModule);
 
@@ -620,7 +736,7 @@ AppModule = __decorate([
 
 /***/ }),
 
-/***/ "../../../../../src/app/blog/blog.component.css":
+/***/ "../../../../../src/app/contacts/contacts.component.css":
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
@@ -638,22 +754,19 @@ module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ "../../../../../src/app/blog/blog.component.html":
+/***/ "../../../../../src/app/contacts/contacts.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h1>Tasks application</h1>\n  <form class=\"well\">\n    <div class=\"form-group\">\n      <input type=\"text\" name=\"\" id=\"\" class=\"form-control\" placeholder=\"Add Task\" />\n    </div>\n  </form>\n<!-- \n  <div *ngFor=\"let todo of todos\" class=\"task-list\">\n    <div class=\"col-md-1\"><input type=\"checkbox\" name=\"\" id=\"\">\n    </div>\n    <div class=\"col-md-7\">\n      {{ todo.title }}\n    </div>\n    <div class=\"col-md-4\">\n      <input type=\"button\" value=\"Update\" class=\"btn btn-info\" />\n      <input type=\"button\" value=\"Delete\" class=\"btn btn-danger\" />\n    </div> -->\n  <!-- </div> -->"
+module.exports = "<p>\n  contacts works!\n</p>\n"
 
 /***/ }),
 
-/***/ "../../../../../src/app/blog/blog.component.ts":
+/***/ "../../../../../src/app/contacts/contacts.component.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_tasks_service__ = __webpack_require__("../../../../../src/app/services/tasks.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__common_error_404__ = __webpack_require__("../../../../../src/app/common/error-404.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__common_not_found_error__ = __webpack_require__("../../../../../src/app/common/not-found-error.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BlogComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ContactsComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -664,150 +777,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
-
-
-
-var BlogComponent = (function () {
-    function BlogComponent(_postsService) {
-        this._postsService = _postsService;
+var ContactsComponent = (function () {
+    function ContactsComponent() {
     }
-    BlogComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this._postsService.getAll()
-            .subscribe(function (tasks) {
-            _this.tasks = tasks;
-        }, function (error) {
-            alert('An unexpected error occured');
-        });
+    ContactsComponent.prototype.ngOnInit = function () {
     };
-    BlogComponent.prototype.addTask = function (newtask) {
-        var _this = this;
-        var task = { "title": newtask.value, "isDone": false };
-        this._postsService.create({ title: newtask.value, isDone: false })
-            .subscribe(function (res) {
-            task['_id'] = res._id;
-            _this.tasks.splice(0, 0, task);
-        }, function (error) {
-            if (error instanceof __WEBPACK_IMPORTED_MODULE_1__common_error_404__["a" /* Error404 */])
-                alert('Bot blin!');
-            else
-                alert('An unexpected error occured');
-        });
-        newtask.value = '';
-    };
-    BlogComponent.prototype.removeTask = function (task) {
-        var _this = this;
-        this._postsService.delete(task._id)
-            .subscribe(function (res) {
-            var index = _this.tasks.indexOf(task);
-            _this.tasks.splice(index, 1);
-        }, function (error) {
-            if (error instanceof __WEBPACK_IMPORTED_MODULE_2__common_not_found_error__["a" /* NotFoundError */])
-                alert('this post has already been deleted');
-            else
-                alert('An unexpected error occured');
-            "";
-        });
-    };
-    BlogComponent.prototype.updateTask = function (task, newdata) {
-        var _this = this;
-        var updtask = { "title": newdata.value, "isDone": task.isDone };
-        this._postsService.update(task._id, { title: newdata.value, isDone: task.isDone })
-            .subscribe(function (res) {
-            updtask['_id'] = task._id;
-            var index = _this.tasks.indexOf(task);
-            _this.tasks.splice(index, 1, updtask);
-        }, function (error) {
-            alert('An unexpected error occured');
-        });
-    };
-    return BlogComponent;
+    return ContactsComponent;
 }());
-BlogComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__angular_core__["Component"])({
-        selector: 'app-blog',
-        template: __webpack_require__("../../../../../src/app/blog/blog.component.html"),
-        styles: [__webpack_require__("../../../../../src/app/blog/blog.component.css")]
+ContactsComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'app-contacts',
+        template: __webpack_require__("../../../../../src/app/contacts/contacts.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/contacts/contacts.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__services_tasks_service__["a" /* TasksService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__services_tasks_service__["a" /* TasksService */]) === "function" && _a || Object])
-], BlogComponent);
+    __metadata("design:paramtypes", [])
+], ContactsComponent);
 
-var _a;
-//# sourceMappingURL=blog.component.js.map
-
-/***/ }),
-
-/***/ "../../../../../src/app/common/app.error.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppError; });
-var AppError = (function () {
-    function AppError(originalError) {
-        this.originalError = originalError;
-    }
-    return AppError;
-}());
-
-//# sourceMappingURL=app.error.js.map
-
-/***/ }),
-
-/***/ "../../../../../src/app/common/error-404.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_error__ = __webpack_require__("../../../../../src/app/common/app.error.ts");
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Error404; });
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-
-var Error404 = (function (_super) {
-    __extends(Error404, _super);
-    function Error404() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    return Error404;
-}(__WEBPACK_IMPORTED_MODULE_0__app_error__["a" /* AppError */]));
-
-//# sourceMappingURL=error-404.js.map
-
-/***/ }),
-
-/***/ "../../../../../src/app/common/not-found-error.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_error__ = __webpack_require__("../../../../../src/app/common/app.error.ts");
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NotFoundError; });
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-
-var NotFoundError = (function (_super) {
-    __extends(NotFoundError, _super);
-    function NotFoundError() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    return NotFoundError;
-}(__WEBPACK_IMPORTED_MODULE_0__app_error__["a" /* AppError */]));
-
-//# sourceMappingURL=not-found-error.js.map
+//# sourceMappingURL=contacts.component.js.map
 
 /***/ }),
 
@@ -893,7 +879,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/gallery/gallery.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h3 class=\"center-align\">Портфолио</h3>\n<div class=\"container\">\n<div class=\"row\">\n  <div *ngFor=\"let album of albums\" class=\"col s12 m6\">\n    <div class=\"card large\">\n      <div class=\"card-image\">\n        <a *ngIf=\"auth.isAuthenticated()\"\n          href=\"#modal1\"\n          (click)=\"editAlbum(album, edittitle, editdescription)\"\n          class=\"btn-floating btn-large modal-trigger waves-effect waves-light fine-button fine-button-edit\"><i class=\"material-icons\">edit</i></a>\n        <a *ngIf=\"auth.isAuthenticated()\"\n          href=\"#modal2\"\n          (click)=\"addToRemovedAlbum(album)\"\n          class=\"btn-floating btn-large modal-trigger waves-effect waves-light fine-button fine-button-delete\"><i class=\"material-icons\">delete</i></a>\n        <a [routerLink]=\"['/portfolio', album.title]\">\n        <img class=\"scaleable opacity-hover\" src=\"{{ album.thumb }}\"></a>\n        <span class=\"card-title\">{{ album.title }}</span>\n      </div>\n      <div class=\"card-content\">\n        {{ album.description }}\n      </div>\n      <div class=\"card-action\">\n      <a class=\"waves-effect waves-light btn\" [routerLink]=\"['/portfolio', album.title]\">Перейти к альбому</a>\n      </div>\n    </div>\n  </div>\n</div>\n\n<div *ngIf=\"auth.isAuthenticated()\" class=\"row\">\n<!-- ADD PHOTOALBUM -->\n  <div class=\"col s12 m6\">\n    <div class=\"card large\">\n      <div class=\"card-image\">\n        <img #albumPreviewPhoto class=\"scaleable opacity-hover\" src=\"http://demo.warptheme.com/images/placeholder_600x400.svg\">\n        <span \n          #albumPreviewTitle\n          class=\"card-title\" \n          style=\"width:100%\"\n          >Название альбома</span>\n      </div>\n      <div class=\"card-content\">\n        <p #albumPreviewDescription>Описание альбома</p>\n      </div>\n      <div class=\"card-action\">\n      <a \n        #showButton\n        class=\"waves-effect waves-light btn\" \n        (click)=\"toggleNewForm($event)\"\n        href=\"#showform\">Новый альбом</a>\n      </div>\n    </div>\n  </div>\n<!-- CREATE ALBUM FORM -->\n\n  <div *ngIf=\"activeNewForm && auth.isAuthenticated()\" class=\"col s12 m6\">\n      <div class=\"card large\">\n        <div class=\"card-image\" style=\"background-color:white\">\n          <div ng2FileDrop\n            [ngClass]=\"{'nv-file-over': hasBaseDropZoneOver}\"\n            (fileOver)=\"fileOverBase($event)\"\n            [uploader]=\"uploader\"\n            class=\"well my-drop-zone\"\n            style=\"height:3rem;padding: .5rem;\">\n            Перетяните фотографии в эту зону\n          </div>\n          <div class=\"file-field input-field\">\n            <div class=\"btn\">\n              <span>Или нажмите</span>\n              <input type=\"file\" ng2FileSelect [uploader]=\"uploader\" multiple  />\n            </div>\n            <div class=\"file-path-wrapper\">\n              <input class=\"file-path validate\" type=\"text\">\n            </div>\n          </div>\n          \n          <br/>\n            <div *ngFor=\"let item of uploader.queue\">\n            <button type=\"button\" class=\"btn btn-success btn-xs\"\n              (click)=\"uploadPhoto(uploader.queue[0], albumPreviewPhoto)\" [disabled]=\"item.isReady || item.isUploading || item.isSuccess\">\n              <span class=\"glyphicon glyphicon-upload\"></span> Загрузить\n            </button>\n            <button type=\"button\" class=\"btn btn-warning btn-xs\"\n                (click)=\"item.cancel()\" [disabled]=\"!item.isUploading\">\n                <span class=\"glyphicon glyphicon-ban-circle\"></span> Отменить\n            </button>\n            <button type=\"button\" class=\"btn btn-danger btn-xs\"\n                    (click)=\"item.remove(item)\">\n                <span class=\"glyphicon glyphicon-trash\"></span> Удалить\n            </button>\n          </div>\n        </div>\n        <div class=\"card-content\" style=\"max-height: 100%;\">\n          <div class=\"input-field\">\n            <input \n              #newtitle\n              (change)=\"changeTitle(newtitle, albumPreviewTitle)\"\n              id=\"album_title\" type=\"text\" class=\"validate\">\n            <label for=\"album_title\">Album title</label>\n          </div>\n          <div class=\"input-field\">\n            <textarea \n              #newdescription\n              (change)=\"changeDescription(newdescription, albumPreviewDescription)\"\n              id=\"album_description\" class=\"materialize-textarea\"></textarea>\n            <label for=\"album_description\">Album description</label>\n          </div>\n        </div>\n        <div class=\"card-action\">\n          <a \n            #submitButton\n            (click)=\"createAlbum($event, newtitle, newdescription, albumPreviewPhoto, albumPreviewTitle, albumPreviewDescription)\"\n            class=\"waves-effect waves-light btn\" \n            href=\"/portfolio\">Добавить альбом</a>\n        </div>\n      </div>\n    </div>\n\n</div>\n\n  <!-- EDIT ALBUM -->\n  <div *ngIf=\"auth.isAuthenticated()\" id=\"modal1\" class=\"modal modal-fixed-footer\">\n    <div class=\"modal-content\">\n      <h4 class=\"center-align\">Редактировать альбом</h4>\n      <div class=\"col s12 m6\">\n        <div class=\"card large\">\n          <div class=\"card-image\" style=\"background-color:white\">\n            <div ng2FileDrop\n              [ngClass]=\"{'nv-file-over': hasBaseDropZoneOver}\"\n              (fileOver)=\"fileOverBase($event)\"\n              [uploader]=\"uploader\"\n              class=\"well my-drop-zone\"\n              style=\"height:3rem;padding: .5rem;\">\n              Перетяните новую фото в эту зону\n            </div>\n            <div class=\"file-field input-field\">\n              <div class=\"btn\">\n                <span>Или нажмите</span>\n                <input type=\"file\" ng2FileSelect [uploader]=\"uploader\" multiple  />\n              </div>\n              <div class=\"file-path-wrapper\">\n                <input class=\"file-path validate\" type=\"text\">\n              </div>\n            </div>\n            \n            <br/>\n              <div *ngFor=\"let item of uploader.queue\">\n              <button type=\"button\" class=\"btn btn-success btn-xs\"\n                (click)=\"changeEditPhoto(uploader.queue[0])\" [disabled]=\"item.isReady || item.isUploading || item.isSuccess\">\n                <span class=\"glyphicon glyphicon-upload\"></span> Загрузить\n              </button>\n              <button type=\"button\" class=\"btn btn-warning btn-xs\"\n                  (click)=\"item.cancel()\" [disabled]=\"!item.isUploading\">\n                  <span class=\"glyphicon glyphicon-ban-circle\"></span> Отменить\n              </button>\n              <button type=\"button\" class=\"btn btn-danger btn-xs\"\n                      (click)=\"item.remove(item)\">\n                  <span class=\"glyphicon glyphicon-trash\"></span> Удалить\n              </button>\n            </div>\n          </div>\n          <div class=\"card-content\" style=\"max-height: 100%;\">\n            <div class=\"input-field\">\n              <input \n                #edittitle\n                (click)=\"changeEditTitle(edittitle)\"\n                id=\"album_title\" type=\"text\" class=\"validate\">\n              <label for=\"album_title\">New title</label>\n            </div>\n            <div class=\"input-field\">\n              <textarea \n                (click)=\"changeEditDescription(editdescription)\"\n                #editdescription\n                id=\"album_description\" class=\"materialize-textarea\"></textarea>\n              <label class=\"\" for=\"album_description\">New description</label>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n    <div class=\"modal-footer\">\n      <a \n        (click)=\"saveEditedAlbum($event, edittitle, editdescription)\"\n        href=\"/portfolio\" \n        class=\"modal-action modal-close waves-effect waves-green btn-flat\">Сохранить</a>\n    </div>\n  </div>\n\n    <!-- ARE YOU SURE MODAL -->\n    <div *ngIf=\"auth.isAuthenticated()\" id=\"modal2\" class=\"modal modal-fixed-footer\">\n      <div class=\"modal-content\">\n       <h4>Вы уверены, что хотите удалить альбом?</h4>\n       <p>Удалятся также и все фотографии в альбоме.</p>\n      </div>\n      <div class=\"modal-footer\">\n        <a \n          (click)=\"removeAlbum()\"\n          href=\"/portfolio\" \n          class=\"modal-action modal-close waves-effect waves-green btn-flat\">Да</a>\n      </div>\n    </div>"
+module.exports = "<h3 class=\"center-align\">Портфолио</h3>\n<div class=\"container\">\n<div class=\"row\">\n  <div *ngFor=\"let album of albums\" class=\"col s12 m6\">\n    <div class=\"card large\">\n      <div class=\"card-image\">\n        <a *ngIf=\"auth.isAuthenticated()\"\n          href=\"#modal1\"\n          (click)=\"editAlbum(album, edittitle, editdescription)\"\n          class=\"btn-floating btn-large modal-trigger waves-effect waves-light fine-button fine-button-edit\"><i class=\"material-icons\">edit</i></a>\n        <a *ngIf=\"auth.isAuthenticated()\"\n          href=\"#modal2\"\n          (click)=\"addToRemovedAlbum(album)\"\n          class=\"btn-floating btn-large modal-trigger waves-effect waves-light fine-button fine-button-delete\"><i class=\"material-icons\">delete</i></a>\n        <a [routerLink]=\"['/portfolio', album.title]\">\n        <img class=\"scaleable opacity-hover\" src=\"{{ album.thumb }}\"></a>\n        <span class=\"card-title\">{{ album.title }}</span>\n      </div>\n      <div class=\"card-content\">\n        {{ album.description }}\n      </div>\n      <div class=\"card-action\">\n      <a class=\"waves-effect waves-light btn\" [routerLink]=\"['/portfolio', album.title]\">Перейти к альбому</a>\n      </div>\n    </div>\n  </div>\n</div>\n\n<div *ngIf=\"auth.isAuthenticated()\" class=\"row\">\n<!-- ADD PHOTOALBUM -->\n  <div class=\"col s12 m6\">\n    <div class=\"card large\">\n      <div class=\"card-image\">\n        <img #albumPreviewPhoto class=\"scaleable opacity-hover\" src=\"http://demo.warptheme.com/images/placeholder_600x400.svg\">\n        <span \n          #albumPreviewTitle\n          class=\"card-title\" \n          style=\"width:100%\"\n          >Название альбома</span>\n      </div>\n      <div class=\"card-content\">\n        <p #albumPreviewDescription>Описание альбома</p>\n      </div>\n      <div class=\"card-action\">\n      <a \n        #showButton\n        class=\"waves-effect waves-light btn\" \n        (click)=\"toggleNewForm($event)\"\n        href=\"#showform\">Новый альбом</a>\n      </div>\n    </div>\n  </div>\n<!-- CREATE ALBUM FORM -->\n\n  <div *ngIf=\"activeNewForm && auth.isAuthenticated()\" class=\"col s12 m6\">\n      <div class=\"card large\">\n        <div class=\"card-image\" style=\"background-color:white\">\n          <div ng2FileDrop\n            [ngClass]=\"{'nv-file-over': hasBaseDropZoneOver}\"\n            (fileOver)=\"fileOverBase($event)\"\n            [uploader]=\"uploader\"\n            class=\"well my-drop-zone\"\n            style=\"height:3rem;padding: .5rem;\">\n            Перетяните фотографии в эту зону\n          </div>\n          <div class=\"file-field input-field\">\n            <div class=\"btn\">\n              <span style=\"text-transform:none;\">Или нажмите</span>\n              <input type=\"file\" ng2FileSelect [uploader]=\"uploader\" multiple  />\n            </div>\n            <div class=\"file-path-wrapper\">\n              <input class=\"file-path validate\" type=\"text\" placeholder=\"Upload one or more files\">\n            </div>\n          </div>\n          \n          <br/>\n            <div *ngFor=\"let item of uploader.queue\">\n            <button type=\"button\" class=\"btn btn-success btn-xs\"\n              (click)=\"uploadPhoto(uploader.queue[0], albumPreviewPhoto)\" [disabled]=\"item.isReady || item.isUploading || item.isSuccess\">\n              <span class=\"glyphicon glyphicon-upload\"></span> Загрузить\n            </button>\n            <button type=\"button\" class=\"btn btn-warning btn-xs\"\n                (click)=\"item.cancel()\" [disabled]=\"!item.isUploading\">\n                <span class=\"glyphicon glyphicon-ban-circle\"></span> Отменить\n            </button>\n            <button type=\"button\" class=\"btn btn-danger btn-xs\"\n                    (click)=\"item.remove(item)\">\n                <span class=\"glyphicon glyphicon-trash\"></span> Удалить\n            </button>\n          </div>\n        </div>\n        <div class=\"card-content\" style=\"max-height: 100%;\">\n          <div class=\"input-field\">\n            <input \n              #newtitle\n              (change)=\"changeTitle(newtitle, albumPreviewTitle)\"\n              id=\"album_title\" type=\"text\" class=\"validate\">\n            <label for=\"album_title\">Album title</label>\n          </div>\n          <div class=\"input-field\">\n            <textarea \n              #newdescription\n              (change)=\"changeDescription(newdescription, albumPreviewDescription)\"\n              id=\"album_description\" class=\"materialize-textarea\"></textarea>\n            <label for=\"album_description\">Album description</label>\n          </div>\n        </div>\n        <div class=\"card-action\">\n          <a \n            #submitButton\n            (click)=\"createAlbum($event, newtitle, newdescription, albumPreviewPhoto, albumPreviewTitle, albumPreviewDescription)\"\n            class=\"waves-effect waves-light btn\" \n            href=\"/portfolio\">Добавить альбом</a>\n        </div>\n      </div>\n    </div>\n\n</div>\n\n  <!-- EDIT ALBUM -->\n  <div *ngIf=\"auth.isAuthenticated()\" id=\"modal1\" class=\"modal modal-fixed-footer\">\n    <div class=\"modal-content\">\n      <h4 class=\"center-align\">Редактировать альбом</h4>\n      <div class=\"col s12 m6\">\n        <div class=\"card large\">\n          <div class=\"card-image\" style=\"background-color:white\">\n            <div ng2FileDrop\n              [ngClass]=\"{'nv-file-over': hasBaseDropZoneOver}\"\n              (fileOver)=\"fileOverBase($event)\"\n              [uploader]=\"uploader\"\n              class=\"well my-drop-zone\"\n              style=\"height:3rem;padding: .5rem;\">\n              Перетяните новую фото в эту зону\n            </div>\n            <div class=\"file-field input-field\">\n              <div class=\"btn\">\n                <span>Или нажмите</span>\n                <input type=\"file\" ng2FileSelect [uploader]=\"uploader\" multiple  />\n              </div>\n              <div class=\"file-path-wrapper\">\n                <input class=\"file-path validate\" type=\"text\">\n              </div>\n            </div>\n            \n            <br/>\n              <div *ngFor=\"let item of uploader.queue\">\n              <button type=\"button\" class=\"btn btn-success btn-xs\"\n                (click)=\"changeEditPhoto(uploader.queue[0])\" [disabled]=\"item.isReady || item.isUploading || item.isSuccess\">\n                <span class=\"glyphicon glyphicon-upload\"></span> Загрузить\n              </button>\n              <button type=\"button\" class=\"btn btn-warning btn-xs\"\n                  (click)=\"item.cancel()\" [disabled]=\"!item.isUploading\">\n                  <span class=\"glyphicon glyphicon-ban-circle\"></span> Отменить\n              </button>\n              <button type=\"button\" class=\"btn btn-danger btn-xs\"\n                      (click)=\"item.remove(item)\">\n                  <span class=\"glyphicon glyphicon-trash\"></span> Удалить\n              </button>\n            </div>\n          </div>\n          <div class=\"card-content\" style=\"max-height: 100%;\">\n            <div class=\"input-field\">\n              <input \n                #edittitle\n                (click)=\"changeEditTitle(edittitle)\"\n                id=\"album_title\" type=\"text\" class=\"validate\">\n              <label for=\"album_title\">New title</label>\n            </div>\n            <div class=\"input-field\">\n              <textarea \n                (click)=\"changeEditDescription(editdescription)\"\n                #editdescription\n                id=\"album_description\" class=\"materialize-textarea\"></textarea>\n              <label class=\"\" for=\"album_description\">New description</label>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n    <div class=\"modal-footer\">\n      <a \n        (click)=\"saveEditedAlbum($event, edittitle, editdescription)\"\n        href=\"/portfolio\" \n        class=\"modal-action modal-close waves-effect waves-green btn-flat\">Сохранить</a>\n    </div>\n  </div>\n\n    <!-- ARE YOU SURE MODAL -->\n    <div *ngIf=\"auth.isAuthenticated()\" id=\"modal2\" class=\"modal modal-fixed-footer\">\n      <div class=\"modal-content\">\n       <h4>Вы уверены, что хотите удалить альбом?</h4>\n       <p>Удалятся также и все фотографии в альбоме.</p>\n      </div>\n      <div class=\"modal-footer\">\n        <a \n          (click)=\"removeAlbum()\"\n          href=\"/portfolio\" \n          class=\"modal-action modal-close waves-effect waves-green btn-flat\">Да</a>\n      </div>\n    </div>"
 
 /***/ }),
 
@@ -943,7 +929,7 @@ var GalleryComponent = (function () {
             "thumb": '',
             "oldTitle": ''
         };
-        /* UPLOAD THE PHOTOS */
+        /* UPLOAD THE PHOTO */
         this.uploader = new __WEBPACK_IMPORTED_MODULE_4_ng2_file_upload__["FileUploader"]({ url: newURL, itemAlias: 'photo' });
         this.hasBaseDropZoneOver = false;
     }
@@ -986,6 +972,7 @@ var GalleryComponent = (function () {
         var _this = this;
         e.preventDefault();
         this.thumb = albumPreviewPhoto.src;
+        console.log(this.title);
         if ((this.title != '') && (this.description != '') && (this.thumb != '')) {
             var album_1 = { "title": this.title, "description": this.description, "thumb": this.thumb };
             this._UploadService.create(album_1)
@@ -1200,7 +1187,7 @@ var _a;
 
 /***/ }),
 
-/***/ "../../../../../src/app/image-detail/image-detail.component.css":
+/***/ "../../../../../src/app/inspiration/inspiration.component.css":
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
@@ -1218,20 +1205,19 @@ module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ "../../../../../src/app/image-detail/image-detail.component.html":
+/***/ "../../../../../src/app/inspiration/inspiration.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  image-detail works!\n</p>\n"
+module.exports = "<p>\n  inspiration works!\n</p>\n"
 
 /***/ }),
 
-/***/ "../../../../../src/app/image-detail/image-detail.component.ts":
+/***/ "../../../../../src/app/inspiration/inspiration.component.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ImageDetailComponent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InspirationComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1242,30 +1228,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
-
-var ImageDetailComponent = (function () {
-    function ImageDetailComponent(_route) {
-        this._route = _route;
+var InspirationComponent = (function () {
+    function InspirationComponent() {
     }
-    ImageDetailComponent.prototype.ngOnInit = function () {
-        this._route.paramMap
-            .subscribe(function (params) {
-            console.log(params);
-        });
+    InspirationComponent.prototype.ngOnInit = function () {
     };
-    return ImageDetailComponent;
+    return InspirationComponent;
 }());
-ImageDetailComponent = __decorate([
+InspirationComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'app-image-detail',
-        template: __webpack_require__("../../../../../src/app/image-detail/image-detail.component.html"),
-        styles: [__webpack_require__("../../../../../src/app/image-detail/image-detail.component.css")]
+        selector: 'app-inspiration',
+        template: __webpack_require__("../../../../../src/app/inspiration/inspiration.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/inspiration/inspiration.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* ActivatedRoute */]) === "function" && _a || Object])
-], ImageDetailComponent);
+    __metadata("design:paramtypes", [])
+], InspirationComponent);
 
-var _a;
-//# sourceMappingURL=image-detail.component.js.map
+//# sourceMappingURL=inspiration.component.js.map
 
 /***/ }),
 
@@ -1335,6 +1314,67 @@ var _a;
 
 /***/ }),
 
+/***/ "../../../../../src/app/my-services/my-services.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/my-services/my-services.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<p>\n  my-services works!\n</p>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/my-services/my-services.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyServicesComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var MyServicesComponent = (function () {
+    function MyServicesComponent() {
+    }
+    MyServicesComponent.prototype.ngOnInit = function () {
+    };
+    return MyServicesComponent;
+}());
+MyServicesComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'app-my-services',
+        template: __webpack_require__("../../../../../src/app/my-services/my-services.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/my-services/my-services.component.css")]
+    }),
+    __metadata("design:paramtypes", [])
+], MyServicesComponent);
+
+//# sourceMappingURL=my-services.component.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/app/navbar/navbar.component.css":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1343,7 +1383,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "nav .nav-wrapper {\n    position: relative;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    height: 100%;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    -ms-flex-wrap: wrap;\n        flex-wrap: wrap;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n}\n\n#logo-container {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    position: relative;\n}", ""]);
+exports.push([module.i, "nav .nav-wrapper {\n    position: relative;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    height: 100%;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    -ms-flex-wrap: wrap;\n        flex-wrap: wrap;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n}\n\n#logo-container {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    position: relative;\n}\n\n@media (min-width: 470px) {\n    .brand-logo-large {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n    }\n\n    .brand-logo-small {\n        display: none !important;\n    }\n}\n\n@media (max-width: 469px) {\n    .brand-logo-small {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n    }\n\n    .brand-logo-large {\n        display: none !important;\n    }\n}", ""]);
 
 // exports
 
@@ -1356,7 +1396,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/navbar/navbar.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"white\" role=\"navigation\">\n  <div class=\"nav-wrapper container\">\n    <ul class=\"left hide-on-med-and-down\">\n        <li \n          routerLinkActive=\"active current\"\n          [routerLinkActiveOptions]=\"{ exact: true }\">\n            <a \n              routerLink=\"/\">Главная</a>\n        </li>\n        <li routerLinkActive=\"active current\"><a routerLink=\"/portfolio\">Портфолио</a></li>\n        <li routerLinkActive=\"active current\"><a routerLink=\"/services\">Услуги</a></li>\n      </ul>\n\n    <a id=\"logo-container\" routerLink=\"/\" class=\"brand-logo\">Alina Logvinova</a>\n\n    <ul class=\"right hide-on-med-and-down\">\n      <li routerLinkActive=\"active current\"><a routerLink=\"/inspire\">Вдохновение</a></li>\n      <li routerLinkActive=\"active current\"><a routerLink=\"/about\">Обо мне</a></li>\n      <li routerLinkActive=\"active current\"><a routerLink=\"/contacts\">Контакты</a></li>\n    </ul>\n\n    <ul id=\"nav-mobile\" class=\"side-nav\">\n      <li><a routerLink=\"/\">Home</a></li>\n      <li><a routerLink=\"/portfolio\">Portfolio</a></li>\n      <li><a routerLink=\"/about\">About me</a></li>\n    </ul>\n    <a href=\"#\" data-activates=\"nav-mobile\" class=\"button-collapse\"><i class=\"material-icons\">menu</i></a>\n  </div>\n</nav>"
+module.exports = "<nav class=\"white\" role=\"navigation\">\n  <div class=\"nav-wrapper container\">\n    <ul class=\"left hide-on-med-and-down\">\n        <li \n          routerLinkActive=\"active current\"\n          [routerLinkActiveOptions]=\"{ exact: true }\">\n            <a \n              routerLink=\"/\">Главная</a>\n        </li>\n        <li routerLinkActive=\"active current\"><a routerLink=\"/portfolio\">Портфолио</a></li>\n        <!-- <li routerLinkActive=\"active current\"><a routerLink=\"/my-services\">Услуги</a></li> -->\n      </ul>\n    \n    <!-- For large displays >470px -->\n    <a id=\"logo-container\" routerLink=\"/\" class=\"brand-logo brand-logo-large\">Alina Logvinova</a>\n    <!-- For small displays -->\n    <a id=\"logo-container\" routerLink=\"/\" class=\"brand-logo brand-logo-small\">AL</a>\n\n    <ul class=\"right hide-on-med-and-down\">\n      <!-- <li routerLinkActive=\"active current\"><a routerLink=\"/inspiration\">Вдохновение</a></li> -->\n      <li routerLinkActive=\"active current\"><a routerLink=\"/about\">Обо мне</a></li>\n      <li routerLinkActive=\"active current\"><a routerLink=\"/contacts\">Контакты</a></li>\n    </ul>\n\n    <ul id=\"nav-mobile\" class=\"side-nav\">\n      <li><a routerLink=\"/\">Home</a></li>\n      <li><a routerLink=\"/portfolio\">Portfolio</a></li>\n      <li><a routerLink=\"/about\">About me</a></li>\n    </ul>\n    <a href=\"#\" data-activates=\"nav-mobile\" class=\"button-collapse\"><i class=\"material-icons\">menu</i></a>\n  </div>\n</nav>"
 
 /***/ }),
 
@@ -1417,7 +1457,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/not-found/not-found.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  not-found works!\n</p>\n"
+module.exports = "<h2 class=\"center-align\">404</h2>\n<p class=\"center-align\">\n  Вы перешли по несуществующему адресу.\n</p>\n"
 
 /***/ }),
 
@@ -1558,10 +1598,10 @@ var AuthService = (function () {
             if (authResult && authResult.accessToken && authResult.idToken) {
                 window.location.hash = '';
                 _this.setSession(authResult);
-                _this.router.navigate(['/home']);
+                _this.router.navigate(['/']);
             }
             else if (err) {
-                _this.router.navigate(['/home']);
+                _this.router.navigate(['/']);
                 console.log(err);
                 alert("Error: " + err.error + ". Check the console for further details.");
             }
@@ -1605,6 +1645,11 @@ var _a;
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AUTH_CONFIG; });
+// export const AUTH_CONFIG: AuthConfig = {
+//   clientID: 'SXK51TGKSgQdJUckqk7PqPuXsFMST0jI',
+//   domain: 'zames.eu.auth0.com',
+//   callbackURL: 'http://localhost:3000/login'
+// };
 var AUTH_CONFIG = {
     clientID: 'SXK51TGKSgQdJUckqk7PqPuXsFMST0jI',
     domain: 'zames.eu.auth0.com',
@@ -1703,6 +1748,12 @@ var ImplementjsService = (function () {
     ImplementjsService.prototype.runMaterializeModal = function () {
         return initMaterializeModal();
     };
+    ImplementjsService.prototype.runBrickLayerLoad = function () {
+        return brickLayerLoad();
+    };
+    ImplementjsService.prototype.runCloseModalBgLayer = function () {
+        return closeModalBgLayer();
+    };
     return ImplementjsService;
 }());
 ImplementjsService = __decorate([
@@ -1758,53 +1809,6 @@ PhotosService = __decorate([
 
 var _a;
 //# sourceMappingURL=photos.service.js.map
-
-/***/ }),
-
-/***/ "../../../../../src/app/services/tasks.service.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__data_service__ = __webpack_require__("../../../../../src/app/services/data.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TasksService; });
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-var TasksService = (function (_super) {
-    __extends(TasksService, _super);
-    function TasksService(_http) {
-        return _super.call(this, "/api/tasks", _http) || this;
-    }
-    return TasksService;
-}(__WEBPACK_IMPORTED_MODULE_0__data_service__["a" /* DataService */]));
-TasksService = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_http__["b" /* Http */]) === "function" && _a || Object])
-], TasksService);
-
-var _a;
-//# sourceMappingURL=tasks.service.js.map
 
 /***/ }),
 
@@ -1992,8 +1996,13 @@ UploadComponent = __decorate([
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return environment; });
+// The file contents for the current environment will overwrite these during build.
+// The build system defaults to the dev environment which uses `environment.ts`, but if you do
+// `ng build --env=prod` then `environment.prod.ts` will be used instead.
+// The list of which env maps to which file can be found in `.angular-cli.json`.
+// The file contents for the current environment will overwrite these during build.
 var environment = {
-    production: true
+    production: false
 };
 //# sourceMappingURL=environment.js.map
 

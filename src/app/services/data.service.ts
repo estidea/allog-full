@@ -1,5 +1,3 @@
-import { NotFoundError } from './../common/not-found-error';
-import { AppError } from './../common/app.error';
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';

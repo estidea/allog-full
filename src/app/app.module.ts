@@ -3,10 +3,12 @@ import { PhotosService } from './services/photos.service';
 import { UploadService } from './services/upload.service';
 import { ImplementjsService } from './services/implementjs.service';
 import { HomeComponent } from './home/home.component';
-import { TasksService } from './services/tasks.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import 'hammerjs';
+import 'mousetrap';
+import {ModalGalleryModule} from 'angular-modal-gallery';
 
 import { AppComponent } from './app.component';
 import { HttpModule, Http, RequestOptions } from '@angular/http';
@@ -24,12 +26,13 @@ import { AboutExamplesComponent } from './about-examples/about-examples.componen
 import { RescentInstagramComponent } from './rescent-instagram/rescent-instagram.component';
 import { FooterComponent } from './footer/footer.component';
 import { SocialLinksComponent } from './social-links/social-links.component';
-import { ImageDetailComponent } from './image-detail/image-detail.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { BlogComponent } from './blog/blog.component';
 import { AboutPhotographerComponent } from './about-photographer/about-photographer.component';
 import { AlbumComponent } from './album/album.component';
 import { LoginComponent } from './login/login.component';
+import { InspirationComponent } from './inspiration/inspiration.component';
+import { MyServicesComponent } from './my-services/my-services.component';
+import { ContactsComponent } from './contacts/contacts.component';
 
 // export function authHttpServiceFactory(http: Http, options: RequestOptions) {
 //   return new AuthHttp(new AuthConfig(), http, options);
@@ -51,20 +54,25 @@ import { LoginComponent } from './login/login.component';
     FooterComponent,
     SocialLinksComponent,
     HomeComponent,
-    ImageDetailComponent,
     NotFoundComponent,
-    BlogComponent,
     AboutPhotographerComponent,
     AlbumComponent,
-    LoginComponent
+    LoginComponent,
+    InspirationComponent,
+    MyServicesComponent,
+    ContactsComponent
   ],
   imports: [
     BrowserModule,
     HttpModule, 
+    ModalGalleryModule.forRoot(),
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
       { path: 'about', component: AboutComponent },
       { path: 'portfolio', component: GalleryComponent },
+      { path: 'inspiration', component: InspirationComponent },
+      { path: 'my-services', component: MyServicesComponent },
+      { path: 'contacts', component: ContactsComponent },
       { path: 'login', component: LoginComponent },
       { path: 'portfolio/:album', component: AlbumComponent },
       { path: '**', component: NotFoundComponent },
@@ -72,7 +80,6 @@ import { LoginComponent } from './login/login.component';
   ],
   providers: [
     DataService, 
-    TasksService,
     ImplementjsService,
     UploadService,
     PhotosService,

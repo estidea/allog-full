@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-declare var swiperLoad:any;
-declare var initMaterialize:any;
+declare const swiperLoad:any;
+declare const initMaterialize:any;
 declare const initMaterializeModal:any;
+declare const brickLayerLoad:any;
+declare const closeModalBgLayer:any;
 
 @Injectable()
 export class ImplementjsService {
@@ -19,4 +21,13 @@ export class ImplementjsService {
   runMaterializeModal() {
     return initMaterializeModal();
   }
+
+  runBrickLayerLoad() {
+    return brickLayerLoad();
+  }
+
+  runCloseModalBgLayer() {
+    return closeModalBgLayer();
+  }
+  
 }

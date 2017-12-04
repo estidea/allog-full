@@ -6,6 +6,12 @@
   width:90%;
 }
 
+@media (min-width: 992px) and (max-width: 1040px) {
+  .nav-wrapper {
+    width:100%;
+  }
+}
+
 #logo-container {
   text-transform: uppercase;
   font-weight: 500;
@@ -22,22 +28,6 @@
   flex-basis:100px;
   flex-grow: 1;
 }*/
-
-/* PINTEREST GALLERY*/
-.block {
-  position: absolute;
-  width: 200px;
-  /*background: #eee;
-  padding: 20px;
-  
-  border: 1px solid #ddd;*/
-}
-
-.relative-parent {
-  position:relative;
-
-}
-
 
 /* SWIPER STYLES*/
   .swiper-container {

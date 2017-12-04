@@ -1,7 +1,6 @@
 var feed = new Instafeed({
-    clientId: 'YOUR_CLIENT_ID'
+    clientId: '97b64742ae8249fb9cfd98aedc745e2a'
 });
-feed.run();
+// feed.run();
 
-        // "assets/js/instafeed.min.js",
-        // "assets/js/insta-recent.js"
+//"assets/js/pinterest-gallery.js",

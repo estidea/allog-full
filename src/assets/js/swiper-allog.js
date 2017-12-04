@@ -2,7 +2,6 @@
     //initialize swiper when document ready  
 //window.onload = 
 function swiperLoad() {
-    console.log();
     let slidesPerView = 3;
     if ((window.screen.width<750) && (window.screen.width>450)) slidesPerView = 2;
     if (window.screen.width<=450) slidesPerView = 1;
@@ -17,3 +16,6 @@ function swiperLoad() {
     });
 }
 //});
+function brickLayerLoad() {
+    var bricklayer = new Bricklayer(document.querySelector('.bricklayer'));
+}

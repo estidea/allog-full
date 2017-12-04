@@ -80,7 +80,7 @@
     </div>
   </div>
 </div>
-<div class="photo-container-wrapper">
+<!-- <div class="photo-container-wrapper">
     <div class="row">
         <div 
             *ngFor="let photo of photos" 
@@ -92,4 +92,58 @@
                 class="btn-floating btn-large waves-effect waves-light fine-button"><i class="material-icons">delete</i></a>
         </div>
     </div>
+</div> -->
+
+<!-- <div class="bricklayer" #mylocalvar>
+    <div *ngFor="let photo of photos" class="photo-item">
+
+         <img style="width:100%" src="{{ photo.thumbs[1].substr(5) }}">
+        <a *ngIf="auth.isAuthenticated()"
+        (click)="removePhoto(photo)" 
+        class="btn-floating btn-large waves-effect waves-light fine-button"><i class="material-icons">delete</i></a>
+    </div>
+</div> -->
+<div
+    [style.visibility]="isDivVisible ? 'visible' : 'hidden'"
+    #modalPhoto
+    tabindex="1"
+    (keyup.ArrowRight)="nextImage()"
+    (keyup.ArrowRight)="prevImage()" 
+    id="show-photo" 
+    class="modal current-photo">  
+    <div class="modal-content current-photo-content">
+        <img (click)="nextImage()" class="large-photo-view" src="{{ currentPhoto.thumbs[0].substr(5) }}">
+    </div>
+    <div class="full-size-display">
+        <div class="narrow prev-narrow">
+            <i 
+                (click)="prevImage()"
+                class="large material-icons">navigate_before</i>
+        </div>
+        <div class="exit-icon">
+            <i 
+                (click)="closeModal()"
+                class="large material-icons">clear</i>
+        </div>
+        <div class="narrow next-narrow">
+            <i 
+                (click)="nextImage()"
+                class="large material-icons">navigate_next</i>
+        </div>
+    </div>
 </div>
+
+<div>
+    <div class="gallery bricklayer" #mylocalvar>
+        <div *ngFor="let photo of photos" class="photo-item">
+            <a 
+                href="#show-photo" 
+                class="modal-trigger"
+                (click)="setCurrentPhoto(photo)">
+                <img style="width:100%" src="{{ photo.thumbs[1].substr(5) }}">
+            </a>
+        </div>
+    </div>        
+</div>
+
+

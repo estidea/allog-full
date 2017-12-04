@@ -1,7 +1,9 @@
 <h3 class="center-align">Случайные работы</h3>
-<div class="row">
-    <a *ngFor="let photo of photos" href="#"> 
-        <img class="responsive-img img-thumb" src="{{ photo.destination.substr(7) + '/' + photo.filename }}">
-    </a>
-    
+
+<div>
+    <div class="gallery bricklayer" #mylocalvar>
+        <div *ngFor="let photo of photos" class="photo-item">
+                <img style="width:100%" src="{{ photo.thumbs[2].substr(5) }}">
+        </div>
+    </div>        
 </div>

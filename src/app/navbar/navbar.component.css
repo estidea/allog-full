@@ -11,3 +11,23 @@ nav .nav-wrapper {
     display: flex;
     position: relative;
 }
+
+@media (min-width: 470px) {
+    .brand-logo-large {
+        display: flex;
+    }
+
+    .brand-logo-small {
+        display: none !important;
+    }
+}
+
+@media (max-width: 469px) {
+    .brand-logo-small {
+        display: flex;
+    }
+
+    .brand-logo-large {
+        display: none !important;
+    }
+}

@@ -2,24 +2,93 @@
 .nv-file-over { border: dotted 3px red; } /* Default class applied to drop zones on over */
 .another-file-over-class { border: dotted 3px green; }
 
-html, body { height: 100%; }
-
-.photo-container-wrapper {
-
+.bricklayer {
+  padding-top: .7rem;
 }
 
-.photo-div {
-    height:300px;
-    background-size: cover;
-    background-position: center center;
-}
-
-.photo-div:hover {
-    /*opacity: .8;*/
-    box-shadow: inset 0 0 0 2px black;
-
+.bricklayer-column {
+  padding-left: 3px;
+  padding-right: 3px;
 }
 
 .fine-button {
-    background-color: rgba(0, 0, 0, 0.58);
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background-color: rgba(0, 0, 0, 0.58);
+}
+
+.photo-item {
+  position: relative;
+}
+
+
+@media screen and (min-width: 1200px) {
+    .bricklayer-column-sizer {
+      /* divide by 3. */
+      width: 33.3%;
+    }
+  }
+  
+@media screen and (min-width: 768px) {
+  .bricklayer-column-sizer {
+    /* divide by 2. */
+    width: 50%;
+  }
+}
+
+.current-photo {
+  top: 0% !important;
+  max-height: 100%;
+  border-radius: 0;
+  width: auto;
+  margin: 0 auto;
+  transform: translate(-50%) !important;
+  left: 50%;
+  right: inherit;
+  background-color: rgba(250, 250, 250, 0);
+  overflow: visible;
+}
+
+.current-photo-content {
+  padding: 0;
+}
+
+.large-photo-view {
+  height: 100vh;
+  display: flex;
+  margin: auto;
+  cursor: pointer;
+}
+
+.full-size-display {
+  width: 100vw;
+}
+
+.narrow {
+  position: absolute;
+  top: 50%;
+  color: white;
+  transform: translate(0,-50%);
+  cursor: pointer;
+}
+
+.exit-icon {
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  color: white;
+  cursor: pointer;
+}
+
+.prev-narrow {
+  left: 1rem;
+}
+
+.next-narrow {
+  right: 1rem;
+}
+
+.prev-narrow:hover, .next-narrow:hover, .exit-icon:hover {
+  background-color: rgba(0, 0, 0, 0.67);
 }

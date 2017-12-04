@@ -37,7 +37,7 @@ export class GalleryComponent implements OnInit {
     private _implementService: ImplementjsService) { } 
 
   ngOnInit() {
-    this._implementService.runMaterializeModal()
+    this._implementService.runMaterializeModal();
     this._UploadService.getAll()
       .subscribe(albums => {
          this.albums = albums;
@@ -60,7 +60,7 @@ export class GalleryComponent implements OnInit {
     e.preventDefault();
     this.activeNewForm = !this.activeNewForm;
   }
-  /* UPLOAD THE PHOTOS */ 
+  /* UPLOAD THE PHOTO */ 
   uploader:FileUploader = new FileUploader({url: newURL, itemAlias: 'photo'});
   
   uploadPhoto(item, albumPreviewPhoto) {
@@ -83,6 +83,7 @@ export class GalleryComponent implements OnInit {
   createAlbum(e, newtitle, newdescription, albumPreviewPhoto, albumPreviewTitle, albumPreviewDescription) {
     e.preventDefault();
     this.thumb = albumPreviewPhoto.src;
+    console.log(this.title);
     if ((this.title != '') && (this.description != '') && (this.thumb != '')) {
       
         let album = { "title": this.title, "description": this.description, "thumb": this.thumb};
