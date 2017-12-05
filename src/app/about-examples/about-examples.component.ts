@@ -28,7 +28,9 @@ export class AboutExamplesComponent implements OnInit {
   ngOnInit() {
     this._PhotosService.getAll()
       .subscribe(photos => {
+        this.photos = photos;
           let i = 0;
+          let k = 0;
           let usedRandom = [];
           while (i < 8) {
             let random = Math.floor(Math.random()*photos.length);
@@ -38,6 +40,8 @@ export class AboutExamplesComponent implements OnInit {
                 usedRandom.push(random);
                 i++;
               }
+              k++;
+              if (k>photos.length) i = 9;
             }
           }
       }, error => {

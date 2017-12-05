@@ -17,7 +17,7 @@ module.exports = "function initMaterialize() {\n  (function($){\n      $(functio
 /***/ "../../../../raw-loader/index.js!../../../../source-map-loader/index.js!../../../../../src/assets/js/insta-recent.js":
 /***/ (function(module, exports) {
 
-module.exports = "var feed = new Instafeed({\n    clientId: '97b64742ae8249fb9cfd98aedc745e2a'\n});\n// feed.run();\n\n//\"assets/js/pinterest-gallery.js\","
+module.exports = "// var feed = new Instafeed({\n//     clientId: '97b64742ae8249fb9cfd98aedc745e2a'\n// });\n// feed.run();\n\n//\"assets/js/pinterest-gallery.js\","
 
 /***/ }),
 

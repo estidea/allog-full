@@ -76,7 +76,9 @@ var AboutExamplesComponent = (function () {
         var _this = this;
         this._PhotosService.getAll()
             .subscribe(function (photos) {
+            _this.photos = photos;
             var i = 0;
+            var k = 0;
             var usedRandom = [];
             while (i < 8) {
                 var random = Math.floor(Math.random() * photos.length);
@@ -86,6 +88,9 @@ var AboutExamplesComponent = (function () {
                         usedRandom.push(random);
                         i++;
                     }
+                    k++;
+                    if (k > photos.length)
+                        i = 9;
                 }
             }
         }, function (error) {
@@ -1996,13 +2001,8 @@ UploadComponent = __decorate([
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return environment; });
-// The file contents for the current environment will overwrite these during build.
-// The build system defaults to the dev environment which uses `environment.ts`, but if you do
-// `ng build --env=prod` then `environment.prod.ts` will be used instead.
-// The list of which env maps to which file can be found in `.angular-cli.json`.
-// The file contents for the current environment will overwrite these during build.
 var environment = {
-    production: false
+    production: true
 };
 //# sourceMappingURL=environment.js.map
 

@@ -64,6 +64,7 @@ import { ContactsComponent } from './contacts/contacts.component';
   ],
   imports: [
     BrowserModule,
+
     HttpModule, 
     ModalGalleryModule.forRoot(),
     RouterModule.forRoot([
