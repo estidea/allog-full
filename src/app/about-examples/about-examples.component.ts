@@ -28,12 +28,11 @@ export class AboutExamplesComponent implements OnInit {
   ngOnInit() {
     this._PhotosService.getAll()
       .subscribe(photos => {
-        this.photos = photos;
-          let i = 0;
-          let k = 0;
-          let usedRandom = [];
-          while (i < 8) {
-            let random = Math.floor(Math.random()*photos.length);
+          let i = 0; 
+          let k = 0; 
+          let usedRandom = []; 
+          while (i < 8) { 
+            let random = Math.floor(Math.random()*photos.length); 
             if (this.contains(usedRandom, random)===false) {
               if ('thumbs' in photos[random]) {
                 this.photos[i] = photos[random];

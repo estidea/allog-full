@@ -18,7 +18,8 @@ import { DataService } from './services/data.service';
 import { GalleryComponent } from './gallery/gallery.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { UploadComponent } from './upload/upload.component';
-import { FileDropDirective, FileSelectDirective } from 'ng2-file-upload';
+// import { FileDropDirective, FileSelectDirective } from 'ng2-file-upload';
+import { FileUploadModule } from 'ng2-file-upload';
 import { HeaderComponent } from './header/header.component';
 import { AlbumsPreviewComponent } from './albums-preview/albums-preview.component';
 import { AboutComponent } from './about/about.component';
@@ -40,8 +41,8 @@ import { ContactsComponent } from './contacts/contacts.component';
 
 @NgModule({
   declarations: [
-    FileDropDirective, 
-    FileSelectDirective,
+    // FileDropDirective, 
+    // FileSelectDirective,
     AppComponent,
     GalleryComponent,
     NavbarComponent,
@@ -64,7 +65,7 @@ import { ContactsComponent } from './contacts/contacts.component';
   ],
   imports: [
     BrowserModule,
-
+    FileUploadModule,
     HttpModule, 
     ModalGalleryModule.forRoot(),
     RouterModule.forRoot([

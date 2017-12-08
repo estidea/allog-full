@@ -1,4 +1,4 @@
-webpackJsonp([2],{
+webpackJsonp(["styles"],{
 
 /***/ "../../../../../src/assets/css/allog.css":
 /***/ (function(module, exports, __webpack_require__) {
