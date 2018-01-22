@@ -148,7 +148,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/about-photographer/about-photographer.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!-- <h3 class=\"center-align\">О фотографе</h3> -->\n<!-- <div class=\"col m10 offset-m1 l12\"> -->\n    <!-- <div class=\"col s12 m7\"> -->\n<h3 class=\"center-align\">Обо мне</h3>\n<div class=\"card horizontal\">\n  <div class=\"row\" style=\"margin-bottom: 0;\">\n    <!-- Only visible on > m screens -->\n    <div class=\"col m5 l4 avatar-about-large\">\n    </div>\n    <!-- Only visible on s screens -->\n    <div class=\"col s10 offset-s1 avatar-about-small\">\n    </div>\n    <div class=\"col s12 m7 l8 xl8\">\n      <div class=\"card-stacked\">\n        <div class=\"card-content\">\n            <p class=\"flow-text\">Всем доброго дня!</p>\n            <p class=\"flow-text\">Меня зовут Алина. На данном сайте вы можете ознакомится с моими фотоработами в стиле портретной, пейзажной и репортажной съемки.</p>\n            <p class=\"flow-text\">Фотография для меня нечто большее, чем просто хобби. Это частичка жизни. Я всегда стараюсь найти красоту в мелочах и запечатлеть лучший момент. К портретной съемке тяготею больше всего. И стараюсь подходить к процессу съемки ответственно и всегда рада интересным и креативным идеям ;)</p>\n            <p class=\"flow-text\">Буду рада знакомству с каждым. Давайте создавать красоту вместе!</p>\n        </div>\n        <div class=\"card-action\">\n          <a class=\"waves-effect waves-light btn grey-btn\" routerLink=\"/my-services\">Услуги</a>\n          <a class=\"waves-effect waves-light btn wide-btn\" routerLink=\"/contacts\">Заказать</a>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<!-- <h3 class=\"center-align\">О фотографе</h3> -->\n<!-- <div class=\"col m10 offset-m1 l12\"> -->\n    <!-- <div class=\"col s12 m7\"> -->\n<h3 class=\"center-align\">Обо мне</h3>\n<div class=\"card horizontal\">\n  <div class=\"row\" style=\"margin-bottom: 0;\">\n    <!-- Only visible on > m screens -->\n    <div class=\"col m5 l4 avatar-about-large\">\n    </div>\n    <!-- Only visible on s screens -->\n    <div class=\"col s10 offset-s1 avatar-about-small\">\n    </div>\n    <div class=\"col s12 m7 l8 xl8\">\n      <div class=\"card-stacked\">\n        <div class=\"card-content\">\n            <p class=\"flow-text\">Всем доброго дня!</p>\n            <p class=\"flow-text\">Меня зовут Алина. На данном сайте вы можете ознакомится с моими фотоработами в стиле портретной, пейзажной и репортажной съемки.</p>\n            <p class=\"flow-text\">Фотография для меня нечто большее, чем просто хобби. Это частичка жизни. Я всегда стараюсь найти красоту в мелочах и запечатлеть лучший момент. К портретной съемке тяготею больше всего. И стараюсь подходить к процессу съемки ответственно и всегда рада интересным и креативным идеям ;)</p>\n            <p class=\"flow-text\">Буду рада знакомству с каждым. Давайте создавать красоту вместе!</p>\n        </div>\n        <div class=\"card-action\">\n          <a class=\"waves-effect waves-light btn grey-btn\" routerLink=\"/portfolio\">Мои работы</a>\n          <a class=\"waves-effect waves-light btn wide-btn\" routerLink=\"/contacts\">Заказать</a>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -767,7 +767,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/contacts/contacts.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col s10 offset-s1\">\n      <h3 class=\"center-align\">Буду рада познакомиться =)</h3>\n      <p class=\"flow-text\">Вот, как можно со мной связаться:</p>\n    </div>\n    <div class=\"col s10 offset-s1\">\n      <ul class=\"collection\">\n          <li class=\"collection-item avatar\">\n            <i class=\"material-icons circle green\">phone_android</i>\n            <span class=\"title\">Основной телефон</span>\n            <p>+380682622445 <br>\n              тут связь с Телеграм и Вайбер\n            </p>\n          </li>\n          <li class=\"collection-item avatar\">\n            <i class=\"material-icons circle\">phone_android</i>\n            <span class=\"title\">Дополнительный телефон</span>\n            <p>+380637127123 <br>\n            </p>\n          </li>\n          <li class=\"collection-item avatar\">\n            <i class=\"material-icons circle red\">email</i>\n            <span class=\"title\">Почта</span>\n            <p>allog.photo@mail.ru <br>\n            </p>\n          </li>\n        </ul>\n    </div>\n    <form class=\"col s10 offset-s1\">\n      <div class=\"row\">\n          <p class=\"flow-text\">А можете просто написать мне, заполнив вооот эту формочку:</p>\n        <div class=\"input-field\">\n          <i class=\"material-icons prefix\">account_circle</i>\n          <input id=\"icon_prefix\" type=\"text\" class=\"validate\">\n          <label for=\"icon_prefix\">Имя</label>\n        </div>\n        <div class=\"input-field\">\n          <i class=\"material-icons prefix\">phone</i>\n          <input id=\"icon_telephone\" type=\"tel\" class=\"validate\">\n          <label for=\"icon_telephone\">Телефон</label>\n        </div>\n        <div class=\"input-field\">\n            <i class=\"material-icons prefix\">mode_edit</i>\n            <textarea id=\"icon_prefix2\" class=\"materialize-textarea\"></textarea>\n            <label for=\"icon_prefix2\">Ваше сообщение</label>\n        </div>\n        <button class=\"btn waves-effect waves-light\" type=\"submit\" name=\"action\">Отправить\n            <i class=\"material-icons right\">send</i>\n          </button>\n      </div>\n    </form>\n  </div>\n</div>\n\n\n"
+module.exports = "<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col s10 offset-s1\">\n      <p class=\"flow-text\"></p>\n      <p class=\"flow-text\">Cвяжитесь со мной. Буду рада познакомиться =)</p>\n    </div>\n    <div class=\"col s10 offset-s1\">\n      <ul class=\"collection\">\n          <li class=\"collection-item avatar\">\n            <i class=\"material-icons circle green\">phone_android</i>\n            <span class=\"title\">Основной телефон</span>\n            <p>+380682622445 <br>\n              тут связь с Телеграм и Вайбер\n            </p>\n          </li>\n          <li class=\"collection-item avatar\">\n            <i class=\"material-icons circle\">phone_android</i>\n            <span class=\"title\">Дополнительный телефон</span>\n            <p>+380637127123 <br>\n            </p>\n          </li>\n          <li class=\"collection-item avatar\">\n            <i class=\"material-icons circle red\">email</i>\n            <span class=\"title\">Почта</span>\n            <p>allog.photo@mail.ru <br>\n            </p>\n          </li>\n        </ul>\n    </div>\n    <form class=\"col s10 offset-s1\">\n      <div class=\"row\">\n          <p class=\"flow-text\">А можете просто написать мне, заполнив форму:</p>\n        <div class=\"input-field\">\n          <i class=\"material-icons prefix\">account_circle</i>\n          <input id=\"icon_prefix\" type=\"text\" class=\"validate\">\n          <label for=\"icon_prefix\">Имя</label>\n        </div>\n        <div class=\"input-field\">\n          <i class=\"material-icons prefix\">phone</i>\n          <input id=\"icon_telephone\" type=\"tel\" class=\"validate\">\n          <label for=\"icon_telephone\">Телефон</label>\n        </div>\n        <div class=\"input-field\">\n            <i class=\"material-icons prefix\">mode_edit</i>\n            <textarea id=\"icon_prefix2\" class=\"materialize-textarea\"></textarea>\n            <label for=\"icon_prefix2\">Ваше сообщение</label>\n        </div>\n        <button class=\"btn waves-effect waves-light\" type=\"submit\" name=\"action\">Отправить\n            <i class=\"material-icons right\">send</i>\n          </button>\n      </div>\n    </form>\n  </div>\n</div>\n\n\n"
 
 /***/ }),
 
@@ -815,7 +815,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".socials li {\n    display: inline-block;\n}\n\n.social-icon {\n    width:3rem;\n}\n\n.social-icon:hover {\n    opacity: .8;\n}", ""]);
+exports.push([module.i, ".socials li {\n    display: inline-block;\n}\n\n.social-icon {\n    width: 2.4rem;\n}\n\n.social-icon:nth-first-child(){\n    width: 2.3rem;\n}\n\n.social-icon:hover {\n    opacity: .8;\n}", ""]);
 
 // exports
 
@@ -1406,7 +1406,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/navbar/navbar.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"white\" role=\"navigation\">\n  <div class=\"nav-wrapper container\">\n    <ul class=\"left hide-on-med-and-down\">\n        <li \n          routerLinkActive=\"active current\"\n          [routerLinkActiveOptions]=\"{ exact: true }\">\n            <a \n              routerLink=\"/\">Главная</a>\n        </li>\n        <li routerLinkActive=\"active current\"><a routerLink=\"/portfolio\">Портфолио</a></li>\n        <!-- <li routerLinkActive=\"active current\"><a routerLink=\"/my-services\">Услуги</a></li> -->\n      </ul>\n    \n    <!-- For large displays >470px -->\n    <a id=\"logo-container\" routerLink=\"/\" class=\"brand-logo brand-logo-large\">Alina Logvinova</a>\n    <!-- For small displays -->\n    <a id=\"logo-container\" routerLink=\"/\" class=\"brand-logo brand-logo-small\">AL</a>\n\n    <ul class=\"right hide-on-med-and-down\">\n      <!-- <li routerLinkActive=\"active current\"><a routerLink=\"/inspiration\">Вдохновение</a></li> -->\n      <li routerLinkActive=\"active current\"><a routerLink=\"/my-services\">Услуги</a></li>\n      <li routerLinkActive=\"active current\"><a routerLink=\"/contacts\">Заказать</a></li>\n    </ul>\n\n    <ul id=\"nav-mobile\" class=\"side-nav\">\n      <li><a routerLink=\"/\">Главная</a></li>\n      <li><a routerLink=\"/portfolio\">Портфолио</a></li>\n      <li><a routerLink=\"/my-services\">Услуги</a></li>\n      <li><a routerLink=\"/contacts\">Заказать</a></li>\n    </ul>\n    <a href=\"#\" data-activates=\"nav-mobile\" class=\"button-collapse\"><i class=\"material-icons\">menu</i></a>\n  </div>\n</nav>"
+module.exports = "<nav class=\"white\" role=\"navigation\">\n  <div class=\"nav-wrapper container\">\n    <ul class=\"left hide-on-med-and-down\">\n        <li \n          routerLinkActive=\"active current\"\n          [routerLinkActiveOptions]=\"{ exact: true }\">\n            <a \n              routerLink=\"/\">Главная</a>\n        </li>\n        <li routerLinkActive=\"active current\"><a routerLink=\"/portfolio\">Портфолио</a></li>\n        <!-- <li routerLinkActive=\"active current\"><a routerLink=\"/my-services\">Услуги</a></li> -->\n      </ul>\n    \n    <!-- For large displays >470px -->\n    <a id=\"logo-container\" routerLink=\"/\" class=\"brand-logo brand-logo-large\">Alina Logvinova</a>\n    <!-- For small displays -->\n    <a id=\"logo-container\" routerLink=\"/\" class=\"brand-logo brand-logo-small\">AL</a>\n\n    <ul class=\"right hide-on-med-and-down\">\n      <!-- <li routerLinkActive=\"active current\"><a routerLink=\"/inspiration\">Вдохновение</a></li> -->\n      <!-- <li routerLinkActive=\"active current\"><a routerLink=\"/my-services\">Услуги</a></li> -->\n      <li routerLinkActive=\"active current\"><a routerLink=\"/contacts\">Заказать</a></li>\n    </ul>\n\n    <ul id=\"nav-mobile\" class=\"side-nav\">\n      <li><a routerLink=\"/\"><i class=\"material-icons\">home</i> Главная</a></li>\n      <li><a routerLink=\"/portfolio\"><i class=\"material-icons\">photo_library</i>Портфолио</a></li>\n      <li><a routerLink=\"/contacts\"><i class=\"material-icons\">phone_iphone</i>Заказать</a></li>\n    </ul>\n    <a href=\"#\" data-activates=\"nav-mobile\" class=\"button-collapse\"><i class=\"material-icons\">menu</i></a>\n  </div>\n</nav>"
 
 /***/ }),
 
@@ -1511,7 +1511,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, "#instafeed {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    width: 100%;\n    -ms-flex-wrap: wrap;\n        flex-wrap: wrap;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n}\n", ""]);
 
 // exports
 
@@ -1524,7 +1524,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/rescent-instagram/rescent-instagram.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h3 class=\"center-align\"> Recent posts from Instagram</h3>\n<div id=\"instafeed\"></div>"
+module.exports = "<h3 class=\"center-align\">Последние фото из Instagram</h3>\n<div id=\"instafeed\"></div>"
 
 /***/ }),
 
@@ -1534,6 +1534,7 @@ module.exports = "<h3 class=\"center-align\"> Recent posts from Instagram</h3>\n
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RescentInstagramComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_implementjs_service__ = __webpack_require__("../../../../../src/app/services/implementjs.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1544,10 +1545,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var RescentInstagramComponent = (function () {
-    function RescentInstagramComponent() {
+    function RescentInstagramComponent(_implementService) {
+        this._implementService = _implementService;
     }
     RescentInstagramComponent.prototype.ngOnInit = function () {
+        this._implementService.runInitInstaphotos();
     };
     return RescentInstagramComponent;
 }());
@@ -1557,9 +1561,10 @@ RescentInstagramComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/rescent-instagram/rescent-instagram.component.html"),
         styles: [__webpack_require__("../../../../../src/app/rescent-instagram/rescent-instagram.component.css")]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_implementjs_service__["a" /* ImplementjsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_implementjs_service__["a" /* ImplementjsService */]) === "function" && _a || Object])
 ], RescentInstagramComponent);
 
+var _a;
 //# sourceMappingURL=rescent-instagram.component.js.map
 
 /***/ }),
@@ -1763,6 +1768,9 @@ var ImplementjsService = (function () {
     };
     ImplementjsService.prototype.runCloseModalBgLayer = function () {
         return closeModalBgLayer();
+    };
+    ImplementjsService.prototype.runInitInstaphotos = function () {
+        return initInstaphotos();
     };
     return ImplementjsService;
 }());

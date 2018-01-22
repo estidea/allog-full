@@ -4,6 +4,7 @@ declare const initMaterialize:any;
 declare const initMaterializeModal:any;
 declare const brickLayerLoad:any;
 declare const closeModalBgLayer:any;
+declare const initInstaphotos:any;
 
 @Injectable()
 export class ImplementjsService {
@@ -28,6 +29,10 @@ export class ImplementjsService {
 
   runCloseModalBgLayer() {
     return closeModalBgLayer();
+  }
+
+  runInitInstaphotos() {
+    return initInstaphotos();
   }
   
 }

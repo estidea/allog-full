@@ -3,7 +3,11 @@
 }
 
 .social-icon {
-    width:3rem;
+    width: 2.4rem;
+}
+
+.social-icon:nth-first-child(){
+    width: 2.3rem;
 }
 
 .social-icon:hover {

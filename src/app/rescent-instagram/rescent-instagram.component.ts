@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ImplementjsService } from '../services/implementjs.service';
 
 @Component({
   selector: 'app-rescent-instagram',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RescentInstagramComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _implementService: ImplementjsService) { }
 
   ngOnInit() {
+    this._implementService.runInitInstaphotos();
   }
+
+  
 
 }
