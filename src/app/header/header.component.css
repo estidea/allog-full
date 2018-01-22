@@ -6,6 +6,18 @@
     margin: 3rem auto;
 }
 
+@media only screen and (max-width: 992px) {
+    #index-banner .section {
+        top: 0;
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    .parallax-container[_ngcontent-c4] .section[_ngcontent-c4] {
+        margin: 0;
+    }
+}
+
 .allog-title {
     letter-spacing: .4rem;
     font-weight: 300;
@@ -23,4 +35,24 @@
     text-transform: uppercase;
     width: initial !important;
     float: none;
+}
+
+.quotation {
+    font-family: 'Lucida Sans Unicode';
+    display: inline-block;
+    font-size:1.4rem;
+    line-height: 1.6;
+}
+
+.quotation i {
+    background-color: rgba(0, 0, 0, 0.48);
+    display: block;
+    max-width: 33rem;
+}
+.quotation-author {
+    display: block;
+    float: right;
+    background-color: rgba(0, 0, 0, 0.48);
+    margin-top: .2rem;
+    font-size: 1.6rem;
 }

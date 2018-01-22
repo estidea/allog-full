@@ -1,0 +1,11 @@
+.socials li {
+    display: inline-block;
+}
+
+.social-icon {
+    width:3rem;
+}
+
+.social-icon:hover {
+    opacity: .8;
+}

@@ -6,8 +6,8 @@ const path = require('path');
 const fs=require('fs');
 const rimraf = require('rimraf');
 
-const db = mongojs('mongodb://estidea:219592@ds111885.mlab.com:11885/allog', ['albums', 'photos']);
-//const db = mongojs('mongodb://estidea:219592@ds151355.mlab.com:51355/allog-test', ['albums', 'photos']);
+// const db = mongojs('mongodb://estidea:219592@ds111885.mlab.com:11885/allog', ['albums', 'photos']);
+const db = mongojs('mongodb://estidea:219592@ds151355.mlab.com:51355/allog-test', ['albums', 'photos']);
 
 // Error handling
 const sendError = (err, res) => {
